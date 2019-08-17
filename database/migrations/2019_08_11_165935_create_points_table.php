@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOauthProvidersTable extends Migration
+class CreatePointsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateOauthProvidersTable extends Migration
      */
     public function up()
     {
-        Schema::create('oauth_providers', function (Blueprint $table) {
+        Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->string('provider');
-            $table->string('provider_user_id')->index();
-            $table->string('access_token')->nullable();
-            $table->string('refresh_token')->nullable();
+            $table->integer('child_id')->unsigned();
+            $table->integer('qty')->unsigned();
+            $table->string('action');
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('child_id')
                 ->references('id')
-                ->on('users')
+                ->on('children')
                 ->onDelete('cascade');
         });
     }
@@ -36,6 +34,6 @@ class CreateOauthProvidersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('oauth_providers');
+        Schema::dropIfExists('points');
     }
 }
