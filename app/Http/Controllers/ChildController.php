@@ -7,79 +7,46 @@ use Illuminate\Http\Request;
 
 class ChildController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $model = Child::all();
+
+        return response()->json($model); 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $req)
+    {
+        Child::create([
+            'name' => $req->name,
+            'gender' => $req->gender,
+            'grade' => $req->grade,
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function show($id)
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(Request $req, $id)
     {
-        //
+        $model = Child::findOrFail($id);
+        $model->update([
+            'name' => $req->name,
+            'gender' => $req->gender,
+            'grade' => $req->grade,
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Child  $child
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Child $child)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Child  $child
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Child $child)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Child  $child
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Child $child)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Child  $child
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Child $child)
-    {
-        //
+        $model = Child::findOrFail($id);
+        $model->delete();
+    
+        return response()->json(['success' => true]);
     }
 }
