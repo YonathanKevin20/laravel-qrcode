@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container">
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark p-2 shadow">
+    <div class="container-fluid">
+      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand ml-2">
         {{ appName }}
       </router-link>
 
@@ -20,7 +20,7 @@
         <ul class="navbar-nav ml-auto">
           <!-- Authenticated -->
           <li v-if="user" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark"
+            <a class="nav-link dropdown-toggle text-light"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             >
               <img :src="user.photo_url" class="rounded-circle profile-photo mr-1">

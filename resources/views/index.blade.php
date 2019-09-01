@@ -14,6 +14,7 @@ $config = [
 
   <title>{{ config('app.name') }}</title>
 
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900%7CRoboto+Mono:500%7CMaterial+Icons" rel="stylesheet">
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
 </head>
 <body>
