@@ -37,5 +37,11 @@
   "failed_to_verify_email": "Failed to verify email.",
   "verify_email_address": "We sent you an email with an the verification link.",
   "username": "Username",
-  "role": "Role"
+  "role": "Role",
+  "create_an_account": "Create an Account!",
+  "children": "Children",
+  "save": "Save",
+  "create": "Create",
+  "edit": "Edit",
+  "dashboard": "Dashboard"
 }
