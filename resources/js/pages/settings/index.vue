@@ -1,30 +1,32 @@
 <template>
-  <div class="row">
-    <div class="col-md-3">
-      <card :title="$t('settings')" class="settings-card">
-        <ul class="nav flex-column nav-pills">
-          <li v-for="tab in tabs" :key="tab.route" class="nav-item">
-            <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
-              <fa :icon="tab.icon" fixed-width />
-              {{ tab.name }}
-            </router-link>
-          </li>
-        </ul>
-      </card>
-    </div>
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <card :title="$t('settings')" class="settings-card">
+          <ul class="nav flex-column nav-pills">
+            <li v-for="tab in tabs" :key="tab.route" class="nav-item">
+              <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
+                <fa :icon="tab.icon" fixed-width />
+                {{ tab.name }}
+              </router-link>
+            </li>
+          </ul>
+        </card>
+      </div>
 
-    <div class="col-md-9">
-      <transition name="fade" mode="out-in">
-        <router-view />
-      </transition>
+      <div class="col-md-9">
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
 export default {
+  layout: 'dashboard',
   middleware: 'auth',
-
   computed: {
     tabs () {
       return [
@@ -45,7 +47,7 @@ export default {
 </script>
 
 <style>
-.settings-card .card-body {
-  padding: 0;
+[role="main"] {
+  padding-top: 58px; /* Space for fixed navbar */
 }
 </style>
