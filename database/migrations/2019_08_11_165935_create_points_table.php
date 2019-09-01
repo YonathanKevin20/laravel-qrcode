@@ -18,7 +18,7 @@ class CreatePointsTable extends Migration
             $table->integer('child_id')->unsigned();
             $table->integer('qty')->unsigned();
             $table->string('action');
-            $table->timestamps();
+            $table->integer('time')->unsigned();
 
             $table->foreign('child_id')
                 ->references('id')

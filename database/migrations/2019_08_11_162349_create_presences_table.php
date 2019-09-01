@@ -16,7 +16,7 @@ class CreatePresencesTable extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('child_id')->unsigned();
-            $table->timestamps();
+            $table->integer('check_in')->unsigned();
 
             $table->foreign('child_id')
                 ->references('id')
