@@ -21,10 +21,16 @@ export default [
       { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
     ]
   },
-  { path: '/child',
-    component: page('child/index.vue'),
+  { path: '/children',
+    component: page('children/index.vue'),
     children: [
-      { path: '', name: 'child.list', component: page('child/list.vue') }
+      { path: '', name: 'children.list', component: page('children/list.vue') }
+    ]
+  },
+  { path: '/points',
+    component: page('points/index.vue'),
+    children: [
+      { path: '', name: 'points.list', component: page('points/list.vue') }
     ]
   },
 

@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
     Route::apiResource('child', 'ChildController');
+    Route::apiResource('point', 'PointController');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

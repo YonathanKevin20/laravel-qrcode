@@ -43,5 +43,9 @@
   "save": "Save",
   "create": "Create",
   "edit": "Edit",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "points": "Points",
+  "presences": "Presences",
+  "import": "Import",
+  "add_points": "Add Point(s)"
 }

@@ -6,16 +6,14 @@
           <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">{{ $t('dashboard') }}</router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'child.list' }" class="nav-link" active-class="active">{{ $t('children') }}</router-link>
+          <router-link :to="{ name: 'children.list' }" class="nav-link" active-class="active">{{ $t('children') }}</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'points.list' }" class="nav-link" active-class="active">{{ $t('points') }}</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            Products
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Customers
+            {{ $t('presences') }}
           </a>
         </li>
         <li class="nav-item">

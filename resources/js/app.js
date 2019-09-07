@@ -9,6 +9,7 @@ import swalPlugin from '~/plugins/sweetalert2';
 import '~/plugins'
 import '~/components'
 
+Vue.prototype.$eventHub = new Vue()
 Vue.config.productionTip = false
 Vue.use(swalPlugin)
 
