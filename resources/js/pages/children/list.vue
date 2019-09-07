@@ -37,10 +37,6 @@
                                 v-model="form.gender"
                                 :label="genderOptions"
                                 name="Gender" />
-                              <!-- <VTextFieldWithValidation
-                                rules="required"
-                                v-model="form.gender"
-                                label="Gender" /> -->
                             </v-col>
                             <v-col cols="6">
                               <VTextFieldWithValidation
@@ -100,7 +96,6 @@ import { ValidationObserver } from "vee-validate"
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 import VRadioWithValidation from '~/components/inputs/VRadioWithValidation'
 
-
 export default {
   components: {
     ValidationObserver,
@@ -125,10 +120,11 @@ export default {
       { text: 'Name', value: 'name' },
       { text: 'Gender', value: 'gender' },
       { text: 'Grade', value: 'grade' },
-      { text: 'Actions', value: 'action', sortable: false },
+      { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
     form: new Form({
+      id: '',
       name: '',
       gender: '',
       grade: '',
@@ -241,7 +237,7 @@ export default {
       }, 300);
     },
     clear() {
-      this.form.name = this.form.gender = this.form.grade = '';
+      this.form.id = this.form.name = this.form.gender = this.form.grade = '';
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
