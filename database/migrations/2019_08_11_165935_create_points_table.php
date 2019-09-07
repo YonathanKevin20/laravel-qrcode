@@ -17,7 +17,7 @@ class CreatePointsTable extends Migration
             $table->increments('id');
             $table->integer('child_id')->unsigned();
             $table->integer('qty')->unsigned();
-            $table->string('action');
+            $table->string('info');
             $table->integer('time')->unsigned();
 
             $table->foreign('child_id')
