@@ -9,9 +9,13 @@
           <v-row>
             <v-col cols="12">
               <v-file-input
-                label="File"
+                outlined
+                show-size
+                label="File input"
+                placeholder="Select your files"
                 v-model="import_file"
-                @change="handleFileUpload"></v-file-input>
+                @change="handleFileUpload">
+              </v-file-input>
             </v-col>
           </v-row>
         </v-container>
