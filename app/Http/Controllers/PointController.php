@@ -53,4 +53,11 @@ class PointController extends Controller
     {
         //
     }
+
+    public function downloadTemplate()
+    {
+        $file = 'template_import_point.xlsx';
+        $url = storage_path('app/public/'.$file);
+        return response()->download($url, $file.'.xlsx');
+    }
 }

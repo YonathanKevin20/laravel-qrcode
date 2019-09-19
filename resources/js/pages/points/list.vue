@@ -13,7 +13,11 @@
               <v-col cols="3">
                 <v-dialog v-model="dialog" max-width="700px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="purple" dark v-on="on">{{ $t('import') }}</v-btn>
+                    <v-btn
+                      color="purple"
+                      dark
+                      @click.prevent="openImportDialog">{{ $t('import') }}</v-btn>
+                    <form-import-point></form-import-point>
                   </template>
                   <ValidationObserver ref="obs">
                     <v-card>
@@ -181,6 +185,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
+    },
+    openImportDialog() {
+      this.$eventHub.$emit('form-import-point', true);
     }
   }
 }

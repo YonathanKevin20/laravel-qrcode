@@ -23,6 +23,8 @@ $config = [
   {{-- Global configuration object --}}
   <script>
     window.config = @json($config);
+    window.base_url = '{{ url('') }}';
+    window.base_api = '{{ url('api') }}';
   </script>
 
   {{-- Load the application scripts --}}
