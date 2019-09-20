@@ -2,6 +2,7 @@
   <v-row>
     <v-col cols="12">
       <v-data-table
+        :id="id"
         :headers="headers"
         :items="items"
         :search="search"
@@ -96,11 +97,8 @@ export default {
     VSelectWithValidation,
   },
 
-  mounted() {
-    this.getData();
-  },
-
   data: () => ({
+    id: 'table-points',
     infoOptions: ['tambah', 'bonus'],
     dialog: false,
     loading: true,
@@ -120,6 +118,23 @@ export default {
       info: '',
     }),
   }),
+
+  created() {
+    let vm = this;
+    this.$eventHub.$on('refresh-table', function(id) {
+      if(id == vm.id) {
+        vm.getData();
+      }
+    });
+  },
+
+  beforeDestroy() {
+    this.$eventHub.$off('refresh-table');
+  },
+
+  mounted() {
+    this.getData();
+  },
 
   computed: {
     formTitle() {

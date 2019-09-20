@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Child;
 use App\Models\Point;
+use App\Imports\PointsImport;
 use Illuminate\Http\Request;
+use DB;
 
 class PointController extends Controller
 {
@@ -54,10 +56,32 @@ class PointController extends Controller
         //
     }
 
+    public function import(Request $req)
+    {
+        if($req->import_file) {
+            DB::beginTransaction();
+            $data = new PointsImport();
+            try {
+                $data->import($req->import_file);
+                DB::commit();
+                return response()->json(['success' => true]);
+            } catch(\Illuminate\Database\QueryException $ex) {
+                DB::rollback();
+                return response()->json([
+                    'message' => 'Terjadi kesalahan pada database',
+                    'console' => $ex->getMessage(),
+                ]);
+            }
+        }
+        else {
+            return back();
+        }
+    }
+
     public function downloadTemplate()
     {
         $file = 'template_import_point.xlsx';
         $url = storage_path('app/public/'.$file);
-        return response()->download($url, $file.'.xlsx');
+        return response()->download($url, $file);
     }
 }

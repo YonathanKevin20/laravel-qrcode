@@ -26,8 +26,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('child', 'ChildController');
     Route::apiResource('point', 'PointController');
 
-    Route::group(['prefix' => 'point'], function() {
-        Route::get('/download/template-import-point', 'PointController@downloadTemplate');
+    Route::group(['prefix' => 'import'], function() {
+        Route::post('/point', 'PointController@import');
+    });
+
+    Route::group(['prefix' => 'download'], function() {
+        Route::get('/template-import-point', 'PointController@downloadTemplate');
     });
 });
 

@@ -34,7 +34,7 @@
         <v-btn
           color="success"
           :disabled="disabled"
-          @click="submit">{{ $t('import') }}
+          @click="submit">{{ $t('submit') }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -55,7 +55,7 @@ export default {
 
   data: () => ({
     dialog: false,
-    url_download: base_api+'/point/download/template-import-point',
+    url_download: base_api+'/download/template-import-point',
     import_file: [],
     disabled: true,
   }),
@@ -85,13 +85,33 @@ export default {
 
   methods: {
     async submit() {
-      this.disabled = true;
-      let formData = new FormData();
-      formData.append('import_file', this.import_file);
       this.$toast.fire({
         type: 'info',
         title: 'File sedang di-import'
       });
+      this.disabled = true;
+      let formData = new FormData();
+      formData.append('import_file', this.import_file);
+      const { data } = await axios.post(base_api+'/import/point', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      if(data.success) {
+        this.$eventHub.$emit('refresh-table', 'table-points');
+        this.disabled = false;
+        this.$toast.fire({
+          type: 'success',
+          title: 'Imported'
+        });
+      }
+      else {
+        this.$toast.fire({
+          type: 'danger',
+          title: 'Failed'
+        });
+        console.log(data.console);
+      }
     },
     close() {
       this.dialog = false;
