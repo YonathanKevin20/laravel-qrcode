@@ -55,7 +55,7 @@ export default {
 
   data: () => ({
     dialog: false,
-    url_download: base_api+'/download/template-import-point',
+    url_download: base_api+'/export/export-template-point',
     import_file: [],
     disabled: true,
   }),

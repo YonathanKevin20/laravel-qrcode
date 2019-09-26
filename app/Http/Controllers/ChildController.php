@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Exports\ChildrenExport;
 use Illuminate\Http\Request;
 
 class ChildController extends Controller
@@ -48,5 +49,10 @@ class ChildController extends Controller
         $model->delete();
     
         return response()->json(['success' => true]);
+    }
+
+    public function exportTemplatePoint()
+    {
+        return (new ChildrenExport)->download('template_import_point.xlsx');
     }
 }

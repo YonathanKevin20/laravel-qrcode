@@ -30,8 +30,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/point', 'PointController@import');
     });
 
-    Route::group(['prefix' => 'download'], function() {
-        Route::get('/template-import-point', 'PointController@downloadTemplate');
+    Route::group(['prefix' => 'export'], function() {
+        Route::get('/export-template-point', 'ChildController@exportTemplatePoint');
     });
 });
 
