@@ -11,6 +11,8 @@ class PresenceController extends Controller
     public function index(Request $req)
     {
         $grade = $req->grade ?? null;
+        $month = $req->month ?? null;
+
         $model = Child::select(['id', 'name']);
 
         if($grade && $grade != 'All') {
@@ -20,7 +22,14 @@ class PresenceController extends Controller
         $model = $model->get();
 
         foreach($model as $m) {
-            $presence = Presence::where('child_id', $m->id)->pluck('check_in');
+            $presence = Presence::where('child_id', $m->id);
+
+            if($month) {
+                $presence = $presence->where('month', $month);
+            }
+
+            $presence = $presence->orderBy('check_in')->pluck('check_in');
+
             $m->week1 = $presence[0] ?? null;
             $m->week2 = $presence[1] ?? null;
             $m->week3 = $presence[2] ?? null;
@@ -33,7 +42,13 @@ class PresenceController extends Controller
 
     public function store(Request $req)
     {
-        //
+        Presence::create([
+            'child_id' => $req->child_id,
+            'check_in' => time(),
+            'month' => date('n'),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
     public function show(Presence $presence)

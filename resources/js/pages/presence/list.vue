@@ -114,9 +114,9 @@ export default {
   data: () => ({
     id: 'table-points',
     months: window.config.listMonths,
-    month: '',
+    month: new Date().getMonth(),
     grades: ['All', 1, 2, 3],
-    grade: '',
+    grade: 'All',
     infoOptions: ['tambah', 'bonus'],
     dialog: false,
     loading: true,

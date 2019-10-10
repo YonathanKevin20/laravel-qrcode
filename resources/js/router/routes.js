@@ -33,10 +33,10 @@ export default [
       { path: '', name: 'points.list', component: page('points/list.vue') }
     ]
   },
-  { path: '/presences',
-    component: page('presences/index.vue'),
+  { path: '/presence',
+    component: page('presence/index.vue'),
     children: [
-      { path: '', name: 'presences.list', component: page('presences/list.vue') }
+      { path: '', name: 'presence.list', component: page('presence/list.vue') }
     ]
   },
 
