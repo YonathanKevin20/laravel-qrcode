@@ -17,6 +17,7 @@ class CreatePresencesTable extends Migration
             $table->increments('id');
             $table->integer('child_id')->unsigned();
             $table->integer('check_in')->unsigned();
+            $table->unsignedTinyInteger('month');
 
             $table->foreign('child_id')
                 ->references('id')
