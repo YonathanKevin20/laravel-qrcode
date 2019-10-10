@@ -11,12 +11,27 @@
         <template v-slot:top>
           <v-container>
             <v-row align="center">
-              <v-col cols="3">
-                <v-btn
-                  color="purple"
-                  dark
-                  @click.prevent="openImportDialog">{{ $t('import') }}</v-btn>
-                <form-import-point></form-import-point>
+              <v-col cols="6">
+                <v-row align="center">
+                  <v-col cols="6">
+                    <v-select
+                      :items="months"
+                      v-model="month"
+                      label="Month"
+                      outlined
+                      hide-details>
+                    </v-select>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-select
+                      :items="grades"
+                      v-model="grade"
+                      label="Grade"
+                      outlined
+                      hide-details>
+                    </v-select>
+                  </v-col>
+                </v-row>
                 <v-dialog v-model="dialog" max-width="700px">
                   <ValidationObserver ref="obs">
                     <v-card>
@@ -57,7 +72,7 @@
                   </ValidationObserver>
                 </v-dialog>
               </v-col>
-              <v-col offset="6" cols="3">
+              <v-col offset="3" cols="3">
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
@@ -83,6 +98,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Form from 'vform'
 import { ValidationObserver } from "vee-validate"
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
@@ -97,6 +113,10 @@ export default {
 
   data: () => ({
     id: 'table-points',
+    months: window.config.listMonths,
+    month: '',
+    grades: ['All', 1, 2, 3],
+    grade: '',
     infoOptions: ['tambah', 'bonus'],
     dialog: false,
     loading: true,
@@ -104,8 +124,11 @@ export default {
     method: 'store',
     headers: [
       { text: 'Name', value: 'name' },
-      { text: 'Grade', value: 'grade' },
-      { text: 'Point(s)', value: 'qty' },
+      { text: 'Week 1', value: 'week1' },
+      { text: 'Week 2', value: 'week2' },
+      { text: 'Week 3', value: 'week3' },
+      { text: 'Week 4', value: 'week4' },
+      { text: 'Week 5', value: 'week5' },
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
@@ -144,13 +167,24 @@ export default {
     dialog(val) {
       val || this.close()
     },
+    grade(val) {
+      this.getData()
+    },
+    month(val) {
+      this.getData()
+    }
   },
 
   methods: {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/point');
+        const response = await axios.get('/api/presence', {
+          params: {
+            grade: this.grade,
+            month: this.month
+          }
+        });
         this.items = response.data;
         this.loading = false;
         console.log(response);
@@ -198,9 +232,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
-    },
-    openImportDialog() {
-      this.$eventHub.$emit('form-import-point', true);
     }
   }
 }

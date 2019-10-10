@@ -2,82 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Child;
 use App\Models\Presence;
 use Illuminate\Http\Request;
 
 class PresenceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $req)
+    {
+        $grade = $req->grade ?? null;
+        $model = Child::select(['id', 'name']);
+
+        if($grade && $grade != 'All') {
+            $model = $model->where('grade', $grade);
+        }
+
+        $model = $model->get();
+
+        foreach($model as $m) {
+            $presence = Presence::where('child_id', $m->id)->pluck('check_in');
+            $m->week1 = $presence[0] ?? null;
+            $m->week2 = $presence[1] ?? null;
+            $m->week3 = $presence[2] ?? null;
+            $m->week4 = $presence[3] ?? null;
+            $m->week5 = $presence[4] ?? null;
+        }
+
+        return response()->json($model);
+    }
+
+    public function store(Request $req)
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
     public function show(Presence $presence)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Presence $presence)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Presence $presence)
+    public function update(Request $req, Presence $presence)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Presence $presence)
     {
         //

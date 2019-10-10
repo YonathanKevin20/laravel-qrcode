@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::apiResource('child', 'ChildController');
     Route::apiResource('point', 'PointController');
+    Route::apiResource('presence', 'PresenceController');
 
     Route::group(['prefix' => 'import'], function() {
         Route::post('/point', 'PointController@import');

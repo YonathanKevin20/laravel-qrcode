@@ -12,9 +12,7 @@
           <router-link :to="{ name: 'points.list' }" class="nav-link" active-class="active">{{ $t('points') }}</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            {{ $t('presences') }}
-          </a>
+          <router-link :to="{ name: 'presences.list' }" class="nav-link" active-class="active">{{ $t('presences') }}</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">

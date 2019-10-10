@@ -12,7 +12,7 @@ class ChildController extends Controller
     {
         $model = Child::all();
 
-        return response()->json($model); 
+        return response()->json($model);
     }
 
     public function store(Request $req)

@@ -21,7 +21,7 @@ class PointController extends Controller
             ])
             ->get();
 
-        return response()->json($model); 
+        return response()->json($model);
     }
 
     public function store(Request $req)
@@ -46,7 +46,7 @@ class PointController extends Controller
         //
     }
 
-    public function update(Request $request, Point $point)
+    public function update(Request $req, Point $point)
     {
         //
     }

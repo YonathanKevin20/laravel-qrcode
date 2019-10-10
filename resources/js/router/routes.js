@@ -33,6 +33,12 @@ export default [
       { path: '', name: 'points.list', component: page('points/list.vue') }
     ]
   },
+  { path: '/presences',
+    component: page('presences/index.vue'),
+    children: [
+      { path: '', name: 'presences.list', component: page('presences/list.vue') }
+    ]
+  },
 
   { path: '*', component: page('errors/404.vue') }
 ]
