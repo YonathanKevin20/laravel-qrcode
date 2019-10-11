@@ -94,18 +94,21 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon
+            color="info"
             title="Edit"
             small
             class="mr-2"
             @click="editItem(item)">mdi-pencil
           </v-icon>
           <v-icon
+            color="warning"
             title="Change Password"
             small
             class="mr-2"
             @click="openChangePasswordDialog(item.id)">mdi-lock
           </v-icon>
           <v-icon
+            color="error"
             title="Delete"
             small
             @click="checkDelete(item.id)">mdi-delete

@@ -74,7 +74,7 @@
             <v-icon
               small
               @click="addPoint(item)">mdi-plus
-          </v-icon>
+            </v-icon>
           </v-btn>
         </template>
       </v-data-table>

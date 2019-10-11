@@ -85,12 +85,11 @@
           </v-container>
         </template>
         <template v-slot:item.action="{ item }">
-          <v-btn x-small fab color="primary">
-            <v-icon
-              small
-              @click="addPoint(item)">mdi-plus
+          <v-icon
+            color="primary"
+            small
+            @click="addPoint(item)">mdi-open-in-new
           </v-icon>
-          </v-btn>
         </template>
       </v-data-table>
     </v-col>
