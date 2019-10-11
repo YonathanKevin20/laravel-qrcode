@@ -20,7 +20,7 @@ class UserController extends Controller
             'username' => $req->username,
             'name' => $req->name,
             'email' => $req->email,
-            'password' => $req->password,
+            'password' => bcrypt($req->password),
             'role' => $req->role,
         ]);
 
