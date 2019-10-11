@@ -4,7 +4,6 @@
       slot-scope="{ errors, valid }"
       v-model="innerValue"
       :error-messages="errors"
-      :success="valid"
       v-bind="$attrs"
       v-on="$listeners">
     </v-text-field>
@@ -33,16 +32,16 @@ export default {
   }),
   watch: {
     // Handles internal model changes.
-    innerValue (newVal) {
+    innerValue(newVal) {
       this.$emit('input', newVal);
     },
     // Handles external model changes.
-    value (newVal) {
+    value(newVal) {
       this.innerValue = newVal;
     }
   },
-  created () {
-    if (this.value) {
+  created() {
+    if(this.value) {
       this.innerValue = this.value;
     }
   }

@@ -1,25 +1,18 @@
 <template>
-  <ValidationProvider :name="$attrs.name" :rules="rules">
-    <v-radio-group
-      slot-scope="{ errors }"
+  <ValidationProvider :name="$attrs.label" :rules="rules">
+    <v-text-field
+      slot-scope="{ errors, valid }"
       v-model="innerValue"
+      :append-icon="show ? 'visibility' : 'visibility_off'"
       :error-messages="errors"
-      row>
-      <v-radio
-        v-for="(row, index) in $attrs.label"
-        :key="index"
-        :label="row.label"
-        :value="row.value"
-        :class="'mb-0'" />
-    </v-radio-group>
+      :type="show ? 'text' : 'password'"
+      counter
+      v-bind="$attrs"
+      v-on="$listeners"
+      @click:append="show = !show">
+    </v-text-field>
   </ValidationProvider>
 </template>
-
-<style>
-  label.v-label {
-    margin-bottom: 0;
-  }
-</style>
 
 <script>
 import { ValidationProvider } from 'vee-validate/dist/vee-validate.full';
@@ -39,6 +32,7 @@ export default {
     }
   },
   data: () => ({
+    show: false,
     innerValue: ''
   }),
   watch: {

@@ -33,16 +33,16 @@ export default {
   }),
   watch: {
     // Handles internal model changes.
-    innerValue (newVal) {
+    innerValue(newVal) {
       this.$emit('input', newVal);
     },
     // Handles external model changes.
-    value (newVal) {
+    value(newVal) {
       this.innerValue = newVal;
     }
   },
-  created () {
-    if (this.value) {
+  created() {
+    if(this.value) {
       this.innerValue = this.value;
     }
   }
