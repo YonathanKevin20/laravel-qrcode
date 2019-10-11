@@ -7,6 +7,7 @@
       row>
       <v-radio
         v-for="(row, index) in $attrs.label"
+        color="primary"
         :key="index"
         :label="row.label"
         :value="row.value"

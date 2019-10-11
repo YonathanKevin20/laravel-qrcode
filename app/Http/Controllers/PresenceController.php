@@ -10,6 +10,7 @@ class PresenceController extends Controller
 {
     public function index(Request $req)
     {
+        // dd(strtotime('2019-09-01'));
         $grade = $req->grade ?? null;
         $month = $req->month ?? null;
 
@@ -30,11 +31,11 @@ class PresenceController extends Controller
 
             $presence = $presence->orderBy('check_in')->pluck('check_in');
 
-            $m->week1 = $presence[0] ?? null;
-            $m->week2 = $presence[1] ?? null;
-            $m->week3 = $presence[2] ?? null;
-            $m->week4 = $presence[3] ?? null;
-            $m->week5 = $presence[4] ?? null;
+            $m->week1 = $presence[0] ?? 'x';
+            $m->week2 = $presence[1] ?? 'x';
+            $m->week3 = $presence[2] ?? 'x';
+            $m->week4 = $presence[3] ?? 'x';
+            $m->week5 = $presence[4] ?? 'x';
         }
 
         return response()->json($model);

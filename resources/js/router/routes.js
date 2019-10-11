@@ -39,6 +39,12 @@ export default [
       { path: '', name: 'presence.list', component: page('presence/list.vue') }
     ]
   },
+  { path: '/users',
+    component: page('users/index.vue'),
+    children: [
+      { path: '', name: 'users.list', component: page('users/list.vue') }
+    ]
+  },
 
   { path: '*', component: page('errors/404.vue') }
 ]

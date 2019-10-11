@@ -26,23 +26,41 @@
                             <v-col cols="12">
                               <VTextFieldWithValidation
                                 rules="required"
+                                v-model="form.username"
+                                label="Username" />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12">
+                              <VTextFieldWithValidation
+                                rules="required"
                                 v-model="form.name"
                                 label="Name" />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12">
+                              <VTextFieldWithValidation
+                                rules="email"
+                                v-model="form.email"
+                                label="Email" />
+                            </v-col>
+                          </v-row>
+                          <v-row v-if="method == 'store'">
+                            <v-col cols="12">
+                              <VPasswordFieldWithValidation
+                              rules="required"
+                              v-model="form.password"
+                              label="Password" />
                             </v-col>
                           </v-row>
                           <v-row>
                             <v-col cols="6">
                               <VRadioWithValidation
                                 rules="required"
-                                v-model="form.gender"
-                                :label="genderOptions"
+                                v-model="form.role"
+                                :label="roleOptions"
                                 name="Gender" />
-                            </v-col>
-                            <v-col cols="6">
-                              <VTextFieldWithValidation
-                                rules="required|numeric"
-                                v-model="form.grade"
-                                label="Grade" />
                             </v-col>
                           </v-row>
                         </v-container>
@@ -82,10 +100,19 @@
             @click="editItem(item)">mdi-pencil
           </v-icon>
           <v-icon
+            title="Change Password"
+            small
+            class="mr-2"
+            @click="openChangePasswordDialog(item.id)">mdi-lock
+          </v-icon>
+          <v-icon
             title="Delete"
             small
             @click="checkDelete(item.id)">mdi-delete
           </v-icon>
+          <form-change-password
+            :id='item.id'>
+          </form-change-password>
         </template>
       </v-data-table>
     </v-col>
@@ -96,12 +123,14 @@
 import Form from 'vform'
 import { ValidationObserver } from "vee-validate"
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
+import VPasswordFieldWithValidation from '~/components/inputs/VPasswordFieldWithValidation'
 import VRadioWithValidation from '~/components/inputs/VRadioWithValidation'
 
 export default {
   components: {
     ValidationObserver,
     VTextFieldWithValidation,
+    VPasswordFieldWithValidation,
     VRadioWithValidation,
   },
 
@@ -110,9 +139,9 @@ export default {
   },
 
   data: () => ({
-    genderOptions: [
-      { label: 'Male', value: 'm' },
-      { label: 'Female', value: 'f' },
+    roleOptions: [
+      { label: 'admin', value: 1 },
+      { label: 'user', value: 2 },
     ],
     dialog: false,
     loading: true,
@@ -120,16 +149,19 @@ export default {
     method: 'store',
     headers: [
       { text: 'Name', value: 'name' },
-      { text: 'Gender', value: 'gender' },
-      { text: 'Grade', value: 'grade' },
+      { text: 'Username', value: 'username' },
+      { text: 'Email', value: 'email' },
+      { text: 'Role', value: 'role' },
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
     form: new Form({
       id: '',
+      username: '',
       name: '',
-      gender: '',
-      grade: '',
+      email: '',
+      password: '',
+      role: '',
     }),
   }),
 
@@ -149,7 +181,7 @@ export default {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/child');
+        const response  = await this.form.get('/api/user');
         this.items = response.data;
         this.loading = false;
         console.log(response);
@@ -170,7 +202,7 @@ export default {
     },
     async store() {
       try {
-        const response = await this.form.post('/api/child');
+        const response = await this.form.post('/api/user');
         this.getData();
         this.close();
         this.$toast.fire({
@@ -184,7 +216,7 @@ export default {
     },
     async update() {
       try {
-        const response = await this.form.patch('/api/child/'+this.form.id);
+        const response = await this.form.patch('/api/user/'+this.form.id);
         this.getData();
         this.close();
         this.$toast.fire({
@@ -200,9 +232,10 @@ export default {
       this.dialog = true;
       this.method = 'update';
       this.form.id = item.id;
+      this.form.username = item.username;
       this.form.name = item.name;
-      this.form.gender = item.gender;
-      this.form.grade = item.grade;
+      this.form.email = item.email;
+      this.form.role = item.role == 'admin' ? 1 : 2;
     },
     checkDelete(id) {
       this.$swal.fire(window.confirmDelete).then((result) => {
@@ -213,7 +246,7 @@ export default {
     },
     async delete(id) {
       try {
-        const response = await this.form.delete('/api/child/'+id);
+        const response = await this.form.delete('/api/user/'+id);
         this.getData();
         this.$toast.fire({
           type: 'success',
@@ -236,6 +269,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
+    },
+    openChangePasswordDialog(id) {
+      this.$eventHub.$emit('form-change-password-'+id, true);
     }
   }
 }

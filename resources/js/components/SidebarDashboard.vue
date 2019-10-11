@@ -22,30 +22,13 @@
       </ul>
 
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-        <span>Saved reports</span>
+        <span>Data Master</span>
         <a class="d-flex align-items-center text-muted" href="#">
         </a>
       </h6>
       <ul class="nav flex-column mb-2">
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            Current month
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Last quarter
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Social engagement
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            Year-end sale
-          </a>
+          <router-link :to="{ name: 'users.list' }" class="nav-link" active-class="active">{{ $t('users') }}</router-link>
         </li>
       </ul>
     </div>

@@ -26,6 +26,14 @@ $config = [
     window.config = @json($config);
     window.base_url = '{{ url('') }}';
     window.base_api = '{{ url('api') }}';
+    window.confirmDelete = {
+      title: 'Are you sure?',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    };
   </script>
 
   {{-- Load the application scripts --}}

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::get('/user', function (Request $request) {
+    Route::get('/online-user', function (Request $request) {
         return $request->user();
     });
 
@@ -26,13 +26,18 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('child', 'ChildController');
     Route::apiResource('point', 'PointController');
     Route::apiResource('presence', 'PresenceController');
+    Route::apiResource('user', 'UserController');
+
+    Route::group(['prefix' => 'export'], function() {
+        Route::get('/export-template-point', 'ChildController@exportTemplatePoint');
+    });
 
     Route::group(['prefix' => 'import'], function() {
         Route::post('/point', 'PointController@import');
     });
 
-    Route::group(['prefix' => 'export'], function() {
-        Route::get('/export-template-point', 'ChildController@exportTemplatePoint');
+    Route::group(['prefix' => 'user'], function() {
+        Route::patch('/update-password/{id}', 'UserController@updatePassword');
     });
 });
 

@@ -228,7 +228,7 @@ export default {
       }, 300);
     },
     clear() {
-      this.form.child_id = this.form.qty = this.form.info = '';
+      this.form.reset();
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });

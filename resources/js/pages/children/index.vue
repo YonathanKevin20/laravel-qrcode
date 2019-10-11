@@ -15,6 +15,9 @@
 export default {
   layout: 'dashboard',
   middleware: 'auth',
+  metaInfo () {
+    return { title: this.$t('children') }
+  }
 }
 </script>
 

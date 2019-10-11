@@ -48,5 +48,6 @@
   "presence": "Presence",
   "import": "Import",
   "submit": "Submit",
-  "add_points": "Add Point(s)"
+  "add_points": "Add Point(s)",
+  "users": "Users"
 }

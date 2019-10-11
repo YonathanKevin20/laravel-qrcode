@@ -10,7 +10,12 @@ class Presence extends Model
     public $timestamps = false;
 
     public function getCheckInAttribute($value) {
-        $date = date('d/m - H:i:s', $value);
+        if(substr($value, 8) == '00') {
+            $date = date('d/m', $value);
+        }
+        else {
+            $date = date('d/m - H:i:s', $value);
+        }
         return $date;
     }
 }
