@@ -13,7 +13,10 @@
               <v-col cols="3">
                 <v-dialog v-model="dialog" max-width="700px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" v-on="on">{{ $t('create') }}</v-btn>
+                    <v-btn
+                      class="white--text"
+                      color="blue"
+                      v-on="on">{{ $t('create') }}</v-btn>
                   </template>
                   <ValidationObserver ref="obs">
                     <v-card>
@@ -76,14 +79,14 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon
-            color="info"
+            color="amber"
             title="Edit"
             small
             class="mr-2"
             @click="editItem(item)">mdi-pencil
           </v-icon>
           <v-icon
-            color="error"
+            color="red"
             title="Delete"
             small
             @click="checkDelete(item.id)">mdi-delete

@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/point', 'PointController@import');
     });
 
+    Route::group(['prefix' => 'presence'], function() {
+        Route::get('/show-child/{child_id}', 'PresenceController@showChild');
+    });
+
     Route::group(['prefix' => 'user'], function() {
         Route::patch('/update-password/{id}', 'UserController@updatePassword');
     });

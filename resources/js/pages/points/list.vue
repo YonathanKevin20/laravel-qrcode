@@ -13,8 +13,8 @@
             <v-row align="center">
               <v-col cols="3">
                 <v-btn
+                  class="white--text"
                   color="purple"
-                  dark
                   @click.prevent="openImportDialog">{{ $t('import') }}</v-btn>
                 <form-import-point></form-import-point>
                 <v-dialog v-model="dialog" max-width="700px">
@@ -70,7 +70,11 @@
           </v-container>
         </template>
         <template v-slot:item.action="{ item }">
-          <v-btn x-small fab color="primary">
+          <v-btn
+            class="white--text"
+            x-small
+            fab
+            color="blue">
             <v-icon
               small
               @click="addPoint(item)">mdi-plus

@@ -9,6 +9,11 @@ class Presence extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
 
+    public function child()
+    {
+        return $this->belongsTo('App\Models\Child', 'child_id', 'id');
+    }
+
     public function getCheckInAttribute($value) {
         if(substr($value, 8) == '00') {
             $date = date('d/m', $value);
