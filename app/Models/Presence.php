@@ -15,7 +15,7 @@ class Presence extends Model
     }
 
     public function getCheckInAttribute($value) {
-        if(substr($value, 8) == '00') {
+        if(date('H:i:s', $value) == '00:00:00') {
             $date = date('d/m', $value);
         }
         else {

@@ -16,3 +16,8 @@ function listMonths() {
     );
     return $months;
 }
+
+function listYears() {
+    $years = App\Models\Presence::select(['year'])->groupBy('year')->pluck('year');
+    return $years;
+}

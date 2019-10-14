@@ -5,6 +5,7 @@ $config = [
     'locales' => config('app.locales'),
     'githubAuth' => config('services.github.client_id'),
     'listMonths' => listMonths(),
+    'listYears' => listYears(),
 ];
 @endphp
 <!DOCTYPE html>
