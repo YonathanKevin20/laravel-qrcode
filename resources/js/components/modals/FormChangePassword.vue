@@ -18,12 +18,15 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
+          <div class="flex-grow-1"></div>
           <v-btn
-            color="error"
+            class="white--text"
+            color="red"
             @click="close">{{ $t('cancel') }}
           </v-btn>
           <v-btn
-            color="success"
+            class="white--text"
+            color="green"
             @click="update">{{ $t('save') }}
           </v-btn>
         </v-card-actions>

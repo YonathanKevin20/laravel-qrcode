@@ -14,7 +14,11 @@
               <v-col cols="3">
                 <v-dialog v-model="dialog" max-width="700px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" v-on="on">{{ $t('create') }}</v-btn>
+                    <v-btn
+                      class="white--text"
+                      color="blue"
+                      v-on="on">{{ $t('create') }}
+                    </v-btn>
                   </template>
                   <ValidationObserver ref="obs">
                     <v-card>
@@ -69,11 +73,13 @@
                       <v-card-actions>
                         <div class="flex-grow-1"></div>
                         <v-btn
-                          color="error"
+                          class="white--text"
+                          color="red"
                           @click="close">{{ $t('cancel') }}
                         </v-btn>
                         <v-btn
-                          color="success"
+                          class="white--text"
+                          color="green"
                           @click="save">{{ $t('save') }}
                         </v-btn>
                       </v-card-actions>
@@ -95,23 +101,19 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon
-            color="info"
+            color="orange"
             title="Edit"
-            small
             class="mr-2"
             @click="editItem(item)">mdi-pencil
           </v-icon>
           <v-icon
-            color="warning"
             title="Change Password"
-            small
             class="mr-2"
             @click="openChangePasswordDialog(item.id)">mdi-lock
           </v-icon>
           <v-icon
-            color="error"
+            color="red"
             title="Delete"
-            small
             @click="checkDelete(item.id)">mdi-delete
           </v-icon>
           <form-change-password
