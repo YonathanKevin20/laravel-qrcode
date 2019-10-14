@@ -20,7 +20,6 @@ $config = [
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
 </head>
 <body>
-  {{-- <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(300)->margin(3)->generate('https://goo.gl/maps/SifYyvBZxEQ3uBaU7')) !!} "> --}}
   <div id="app"></div>
 
   {{-- Global configuration object --}}

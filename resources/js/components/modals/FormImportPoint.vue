@@ -24,15 +24,17 @@
         <v-btn
           :href="url_download"
           outlined
-          color="info">Download Template
+          color="blue">Download Template
         </v-btn>
         <div class="flex-grow-1"></div>
         <v-btn
-          color="error"
+          class="white--text"
+          color="red"
           @click="close">{{ $t('cancel') }}
         </v-btn>
         <v-btn
-          color="success"
+          class="white--text"
+          color="green"
           :disabled="disabled"
           @click="submit">{{ $t('submit') }}
         </v-btn>

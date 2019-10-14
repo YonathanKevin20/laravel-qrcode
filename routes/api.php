@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => 'child'], function() {
         Route::get('/generate-qrcode/{id}', 'ChildController@generateQrCode');
+        Route::get('/download-qrcode/{id}', 'ChildController@downloadQrCode');
     });
 
     Route::group(['prefix' => 'export'], function() {

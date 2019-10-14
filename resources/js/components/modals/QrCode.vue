@@ -20,6 +20,11 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
+        <v-btn
+          :href="url_download"
+          outlined
+          color="blue">Download QR Code
+        </v-btn>
         <div class="flex-grow-1"></div>
         <v-btn
           class="white--text"
@@ -41,6 +46,7 @@ export default {
 
   data: () => ({
     dialog: false,
+    url_download: '',
     encode: '',
     name: '',
   }),
@@ -60,6 +66,7 @@ export default {
   created() {
     let vm = this;
     this.$eventHub.$on('qr-code-'+this.id, function(item, value) {
+      vm.url_download = base_api+'/child/download-qrcode/'+item.id,
       vm.getData();
       vm.name = item.name;
       vm.dialog = value;

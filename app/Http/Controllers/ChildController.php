@@ -61,6 +61,15 @@ class ChildController extends Controller
         return response()->json($qrcode);
     }
 
+    public function downloadQrCode($id)
+    {
+        $model = Child::findOrFail($id);
+
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id), public_path('storage/qrcodes/'.$model->name.'.png')));
+
+        return response()->download(public_path('storage/qrcodes/'.$model->name.'.png'), $model->name.'.png');
+    }
+
     public function exportTemplatePoint()
     {
         return (new ChildrenExport)->download('template_import_point.xlsx');
