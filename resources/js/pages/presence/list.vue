@@ -5,7 +5,8 @@
         :headers="headers"
         :items="items"
         :search="search"
-        :loading="loading" loading-text="Loading... Please wait"
+        :loading="loading"
+        loading-text="Loading... Please wait"
         class="elevation-1">
         <template v-slot:top>
           <v-container>
@@ -73,7 +74,7 @@ export default {
     years: [2019, 2020],
     year: new Date().getFullYear(),
     months: window.config.listMonths,
-    month: new Date().getMonth(),
+    month: new Date().getMonth()+1,
     grades: ['All', 1, 2, 3],
     grade: 'All',
     loading: true,

@@ -11,8 +11,8 @@ class PresenceController extends Controller
     public function index(Request $req)
     {
         $grade = $req->grade ?? null;
-        $month = $req->month ?? null;
-        $year = $req->year ?? null;
+        $month = $req->month ?? date('n');
+        $year = $req->year ?? date('Y');
 
         $model = Child::select(['id', 'name']);
 
@@ -51,6 +51,7 @@ class PresenceController extends Controller
             'child_id' => $req->child_id,
             'check_in' => time(),
             'month' => date('n'),
+            'year' => date('Y')
         ]);
 
         return response()->json(['success' => true]);
@@ -61,14 +62,19 @@ class PresenceController extends Controller
         //
     }
 
-    public function showChild($child_id)
+    public function showChild(Request $req, $child_id)
     {
-        $model = Child::select(['id', 'name', 'grade'])->where('id', $child_id);
-        $model = $model->first();
+        $year = $req->year ?? date('Y');
+
+        $model = Child::select(['id', 'name', 'grade'])->where('id', $child_id)->first();
 
         $month = array();
         for($i = 1; $i <= 12; $i++) {
-            $presence = Presence::where('child_id', $child_id)->where('month', $i)->orderBy('check_in')->pluck('check_in');
+            $presence = Presence::where('child_id', $child_id)
+                ->where('month', $i)
+                ->where('year', $year)
+                ->orderBy('check_in')
+                ->pluck('check_in');
 
             $month[$i]['week1'] = $presence[0] ?? 'x';
             $month[$i]['week2'] = $presence[1] ?? 'x';

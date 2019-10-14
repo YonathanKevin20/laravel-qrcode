@@ -6,7 +6,8 @@
         :headers="headers"
         :items="items"
         :search="search"
-        :loading="loading" loading-text="Loading... Please wait"
+        :loading="loading"
+        loading-text="Loading... Please wait"
         class="elevation-1">
         <template v-slot:top>
           <v-container>
