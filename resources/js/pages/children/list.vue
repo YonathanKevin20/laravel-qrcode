@@ -85,7 +85,7 @@
           <v-icon
             title="QR Code"
             class="mr-2"
-            @click="openQRCode(item)">mdi-qrcode
+            @click="openQrCodeDialog(item)">mdi-qrcode
           </v-icon>
           <v-icon
             color="orange"
@@ -98,6 +98,9 @@
             title="Delete"
             @click="checkDelete(item.id)">mdi-delete
           </v-icon>
+          <qr-code
+            :id='item.id'>
+          </qr-code>
         </template>
       </v-data-table>
     </v-col>
@@ -115,10 +118,6 @@ export default {
     ValidationObserver,
     VTextFieldWithValidation,
     VRadioWithValidation,
-  },
-
-  mounted() {
-    this.getData();
   },
 
   data: () => ({
@@ -155,6 +154,10 @@ export default {
     dialog(val) {
       val || this.close()
     },
+  },
+
+  mounted() {
+    this.getData();
   },
 
   methods: {
@@ -236,9 +239,6 @@ export default {
         console.error(error);
       }
     },
-    openQRCode(id) {
-      alert(id);
-    },
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -251,7 +251,10 @@ export default {
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
-    }
+    },
+    openQrCodeDialog(item) {
+      this.$eventHub.$emit('qr-code-'+item.id, item, true);
+    },
   }
 }
 </script>

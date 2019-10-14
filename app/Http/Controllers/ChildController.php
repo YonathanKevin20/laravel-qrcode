@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Child;
 use App\Exports\ChildrenExport;
 use Illuminate\Http\Request;
+use QrCode;
 
 class ChildController extends Controller
 {
@@ -49,6 +50,15 @@ class ChildController extends Controller
         $model->delete();
     
         return response()->json(['success' => true]);
+    }
+
+    public function generateQrCode($id)
+    {
+        $model = Child::findOrFail($id);
+
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id)));
+
+        return response()->json($qrcode);
     }
 
     public function exportTemplatePoint()

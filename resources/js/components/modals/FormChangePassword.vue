@@ -35,12 +35,6 @@
   </v-dialog>
 </template>
 
-<style>
-  a:hover {
-    text-decoration: none;
-  }
-</style>
-
 <script>
 import Form from 'vform'
 import { ValidationObserver } from "vee-validate"
@@ -58,7 +52,7 @@ export default {
 
   data: () => ({
     dialog: false,
-    import_file: [],
+    name: '',
     form: new Form({
       password: '',
     }),
@@ -66,7 +60,7 @@ export default {
 
   computed: {
     formTitle() {
-      return 'Change Password'
+      return 'Change Password for '+this.name;
     },
   },
 
@@ -78,13 +72,14 @@ export default {
 
   created() {
     let vm = this;
-    this.$eventHub.$on('form-change-password-'+this.id, function(value) {
+    this.$eventHub.$on('form-change-password-'+this.id, function(item, value) {
+      vm.name = item.name;
       vm.dialog = value;
     });
   },
 
   beforeDestroy() {
-    this.$eventHub.$off('form-change-password');
+    this.$eventHub.$off('form-change-password-'+this.id);
   },
 
   methods: {

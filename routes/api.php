@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('presence', 'PresenceController');
     Route::apiResource('user', 'UserController');
 
+    Route::group(['prefix' => 'child'], function() {
+        Route::get('/generate-qrcode/{id}', 'ChildController@generateQrCode');
+    });
+
     Route::group(['prefix' => 'export'], function() {
         Route::get('/export-template-point', 'ChildController@exportTemplatePoint');
     });

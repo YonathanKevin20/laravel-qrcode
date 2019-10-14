@@ -101,15 +101,15 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon
+            title="Change Password"
+            class="mr-2"
+            @click="openChangePasswordDialog(item)">mdi-lock
+          </v-icon>
+          <v-icon
             color="orange"
             title="Edit"
             class="mr-2"
             @click="editItem(item)">mdi-pencil
-          </v-icon>
-          <v-icon
-            title="Change Password"
-            class="mr-2"
-            @click="openChangePasswordDialog(item.id)">mdi-lock
           </v-icon>
           <v-icon
             color="red"
@@ -276,8 +276,8 @@ export default {
         this.$refs.obs.reset();
       });
     },
-    openChangePasswordDialog(id) {
-      this.$eventHub.$emit('form-change-password-'+id, true);
+    openChangePasswordDialog(item) {
+      this.$eventHub.$emit('form-change-password-'+item.id, item, true);
     }
   }
 }

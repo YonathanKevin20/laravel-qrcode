@@ -5,6 +5,7 @@ import Button from './Button'
 import Checkbox from './Checkbox'
 import FormImportPoint from './modals/FormImportPoint'
 import FormChangePassword from './modals/FormChangePassword'
+import QrCode from './modals/QrCode'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -15,6 +16,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Checkbox,
   FormImportPoint,
   FormChangePassword,
+  QrCode,
   HasError,
   AlertError,
   AlertSuccess
