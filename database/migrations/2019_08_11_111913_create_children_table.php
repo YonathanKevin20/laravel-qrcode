@@ -17,6 +17,8 @@ class CreateChildrenTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->enum('gender', ['m', 'f']);
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
             $table->string('grade');
             $table->timestamps();
         });

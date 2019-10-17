@@ -37,6 +37,41 @@
                           </v-row>
                           <v-row>
                             <v-col cols="6">
+                              <VTextFieldWithValidation
+                                rules="required"
+                                v-model="form.place_of_birth"
+                                label="Place of Birth" />
+                            </v-col>
+                            <v-col cols="6">
+                              <v-menu
+                                ref="menu"
+                                v-model="menuDate"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="290px">
+                                <template v-slot:activator="{ on }">
+                                  <VTextFieldWithValidation
+                                    rules="required"
+                                    v-model="form.date_of_birth"
+                                    label="Date of Birth"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-on="on" />
+                                </template>
+                                <v-date-picker
+                                  ref="picker"
+                                  color="blue"
+                                  v-model="form.date_of_birth"
+                                  :max="new Date().toISOString().substr(0, 10)"
+                                  min="1950-01-01"
+                                  @change="saveDate">
+                                </v-date-picker>
+                              </v-menu>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="6">
                               <VRadioWithValidation
                                 rules="required"
                                 v-model="form.gender"
@@ -133,13 +168,17 @@ export default {
       { text: 'Name', value: 'name' },
       { text: 'Gender', value: 'gender' },
       { text: 'Grade', value: 'grade' },
+      { text: 'Age', value: 'age'},
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
+    menuDate: false,
     form: new Form({
       id: '',
       name: '',
       gender: '',
+      place_of_birth: '',
+      date_of_birth: '',
       grade: '',
     }),
   }),
@@ -153,6 +192,9 @@ export default {
   watch: {
     dialog(val) {
       val || this.close()
+    },
+    menuDate(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
   },
 
@@ -217,6 +259,8 @@ export default {
       this.form.id = item.id;
       this.form.name = item.name;
       this.form.gender = item.gender;
+      this.form.place_of_birth = item.place_of_birth;
+      this.form.date_of_birth = item.date_of_birth;
       this.form.grade = item.grade;
     },
     checkDelete(id) {
@@ -251,6 +295,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
+    },
+    saveDate(date) {
+      this.$refs.menu.save(date);
     },
     openQrCodeDialog(item) {
       this.$eventHub.$emit('qr-code-'+item.id, item, true);

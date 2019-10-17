@@ -11,7 +11,7 @@ class ChildController extends Controller
 {
     public function index()
     {
-        $model = Child::all();
+        $model = Child::orderBy('grade')->get();
 
         return response()->json($model);
     }
@@ -21,6 +21,8 @@ class ChildController extends Controller
         Child::create([
             'name' => $req->name,
             'gender' => $req->gender,
+            'place_of_birth' => $req->place_of_birth,
+            'date_of_birth' => $req->date_of_birth,
             'grade' => $req->grade,
         ]);
 
@@ -29,7 +31,9 @@ class ChildController extends Controller
 
     public function show($id)
     {
-        //
+        $model = Child::findOrFail($id);
+
+        return response()->json($model);
     }
 
     public function update(Request $req, $id)
@@ -38,6 +42,8 @@ class ChildController extends Controller
         $model->update([
             'name' => $req->name,
             'gender' => $req->gender,
+            'place_of_birth' => $req->place_of_birth,
+            'date_of_birth' => $req->date_of_birth,
             'grade' => $req->grade,
         ]);
 
@@ -56,7 +62,7 @@ class ChildController extends Controller
     {
         $model = Child::findOrFail($id);
 
-        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id)));
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url('api/child/'.$model->id)));
 
         return response()->json($qrcode);
     }
