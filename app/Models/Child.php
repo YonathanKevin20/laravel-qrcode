@@ -12,6 +12,6 @@ class Child extends Model
 
     public function getAgeAttribute()
     {
-    	return Carbon::parse($this->date_of_birth)->age;
+        return Carbon::parse($this->date_of_birth)->age;
     }
 }

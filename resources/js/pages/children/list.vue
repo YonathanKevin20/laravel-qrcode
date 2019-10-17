@@ -166,9 +166,9 @@ export default {
     method: 'store',
     headers: [
       { text: 'Name', value: 'name' },
+      { text: 'Age', value: 'age'},
       { text: 'Gender', value: 'gender' },
       { text: 'Grade', value: 'grade' },
-      { text: 'Age', value: 'age'},
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
