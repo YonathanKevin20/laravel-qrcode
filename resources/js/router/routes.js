@@ -30,14 +30,15 @@ export default [
   { path: '/points',
     component: page('points/index.vue'),
     children: [
-      { path: '', name: 'points.list', component: page('points/list.vue') }
+      { path: '', name: 'points.list', component: page('points/list.vue') },
+      { path: 'detail-child/:child_id', name: 'points.detail', component: page('points/detail.vue') }
     ]
   },
   { path: '/presence',
     component: page('presence/index.vue'),
     children: [
       { path: '', name: 'presence.list', component: page('presence/list.vue') },
-      { path: '/detail-child/:child_id', name: 'presence.detail', component: page('presence/detail.vue') }
+      { path: 'detail-child/:child_id', name: 'presence.detail', component: page('presence/detail.vue') }
     ]
   },
   { path: '/users',

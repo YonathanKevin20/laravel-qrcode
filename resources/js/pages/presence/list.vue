@@ -56,7 +56,7 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-icon
-            color="blue"
+            title="Detail"
             @click="detailPresence(item)">mdi-open-in-new
           </v-icon>
         </template>

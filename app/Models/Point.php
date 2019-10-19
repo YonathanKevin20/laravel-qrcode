@@ -13,4 +13,10 @@ class Point extends Model
     {
         return $this->belongsTo('App\Models\Child', 'child_id', 'id');
     }
+
+    public function getTimeAttribute($value)
+    {
+        $date = date('d/m/Y - H:i:s', $value);
+        return $date;
+    }
 }

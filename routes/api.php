@@ -41,6 +41,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/point', 'PointController@import');
     });
 
+    Route::group(['prefix' => 'point'], function() {
+        Route::get('/show-child/{child_id}', 'PointController@showChild');
+    });
+
     Route::group(['prefix' => 'presence'], function() {
         Route::get('/show-child/{child_id}', 'PresenceController@showChild');
     });

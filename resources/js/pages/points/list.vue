@@ -74,7 +74,8 @@
         </template>
         <template v-slot:item.action="{ item }">
           <v-btn
-            class="white--text"
+            title="Add"
+            class="mr-2 white--text"
             x-small
             fab
             color="blue"
@@ -83,6 +84,10 @@
               small>mdi-plus
             </v-icon>
           </v-btn>
+          <v-icon
+            title="Detail"
+            @click="detailPoint(item)">mdi-open-in-new
+          </v-icon>
         </template>
       </v-data-table>
     </v-col>
@@ -208,7 +213,10 @@ export default {
     },
     openImportDialog() {
       this.$eventHub.$emit('form-import-point', true);
-    }
+    },
+    detailPoint(item) {
+      this.$router.push({ name: 'points.detail', params: { child_id: item.child_id } });
+    },
   }
 }
 </script>
