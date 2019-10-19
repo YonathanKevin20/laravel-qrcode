@@ -264,7 +264,7 @@ export default {
       this.form.grade = item.grade;
     },
     checkDelete(id) {
-      this.$swal.fire(window.confirmDelete).then((result) => {
+      this.$swal.fire(this.confirmDelete).then((result) => {
         if(result.value) {
           this.delete(id);
         }

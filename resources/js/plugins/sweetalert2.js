@@ -9,7 +9,7 @@ swalPlugin.install = function(Vue){
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 2400,
+        timer: 3600,
     });
 }
 

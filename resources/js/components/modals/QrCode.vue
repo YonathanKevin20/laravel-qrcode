@@ -9,6 +9,13 @@
           <v-row
             :justify="'center'">
             <v-col cols="6">
+              <v-responsive class="text-center">
+                <v-progress-circular
+                  v-if='!encode'
+                  indeterminate
+                  color="primary">
+                </v-progress-circular>
+              </v-responsive>
               <v-img
                 v-if='encode'
                 aspect-ratio="1"
@@ -81,8 +88,20 @@ export default {
     async getData() {
       try {
         const response = await axios.get('/api/child/generate-qrcode/'+this.id);
-        this.encode = response.data;
+        if(response.data) {
+          this.encode = response.data;
+        }
+        else {
+          this.$toast.fire({
+            type: 'error',
+            title: 'Failed to Load'
+          });
+        }
       } catch (error) {
+        this.$toast.fire({
+          type: 'error',
+          title: 'Failed to Load'
+        });
         console.error(error);
       }
     },

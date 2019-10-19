@@ -46,11 +46,13 @@
                       <v-card-actions>
                         <div class="flex-grow-1"></div>
                         <v-btn
-                          color="error"
+                          class="white--text"
+                          color="red"
                           @click="close">{{ $t('cancel') }}
                         </v-btn>
                         <v-btn
-                          color="success"
+                          class="white--text"
+                          color="green"
                           @click="save">{{ $t('save') }}
                         </v-btn>
                       </v-card-actions>
@@ -75,10 +77,10 @@
             class="white--text"
             x-small
             fab
-            color="blue">
+            color="blue"
+            @click="addPoint(item)">
             <v-icon
-              small
-              @click="addPoint(item)">mdi-plus
+              small>mdi-plus
             </v-icon>
           </v-btn>
         </template>

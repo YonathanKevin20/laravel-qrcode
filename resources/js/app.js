@@ -12,6 +12,23 @@ import '~/components'
 Vue.prototype.$eventHub = new Vue()
 Vue.config.productionTip = false
 Vue.use(swalPlugin)
+Vue.mixin({
+  data: function() {
+    return {
+      get confirmDelete() {
+      	let conf = {
+		      title: 'Are you sure?',
+		      type: 'warning',
+		      showCancelButton: true,
+		      confirmButtonColor: '#3085d6',
+		      cancelButtonColor: '#d33',
+		      confirmButtonText: 'Yes'      		
+      	}
+        return conf;
+      }
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
