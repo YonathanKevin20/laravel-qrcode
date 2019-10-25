@@ -73,17 +73,11 @@
           </v-container>
         </template>
         <template v-slot:item.action="{ item }">
-          <v-btn
+          <v-icon
             title="Add"
-            class="mr-2 white--text"
-            x-small
-            fab
-            color="blue"
-            @click="addPoint(item)">
-            <v-icon
-              small>mdi-plus
-            </v-icon>
-          </v-btn>
+            class="mr-2"
+            @click="addPoint(item)">mdi-plus-circle-outline
+          </v-icon>
           <v-icon
             title="Detail"
             @click="detailPoint(item)">mdi-open-in-new
@@ -96,7 +90,7 @@
 
 <script>
 import Form from 'vform'
-import { ValidationObserver } from "vee-validate"
+import { ValidationObserver } from 'vee-validate'
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 import VSelectWithValidation from '~/components/inputs/VSelectWithValidation'
 

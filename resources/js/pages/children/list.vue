@@ -144,7 +144,7 @@
 
 <script>
 import Form from 'vform'
-import { ValidationObserver } from "vee-validate"
+import { ValidationObserver } from 'vee-validate'
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 import VRadioWithValidation from '~/components/inputs/VRadioWithValidation'
 

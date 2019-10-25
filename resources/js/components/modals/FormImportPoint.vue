@@ -109,7 +109,7 @@ export default {
       }
       else {
         this.$toast.fire({
-          type: 'danger',
+          type: 'error',
           title: 'Failed'
         });
         console.log(data.console);

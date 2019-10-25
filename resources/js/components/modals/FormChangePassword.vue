@@ -37,7 +37,7 @@
 
 <script>
 import Form from 'vform'
-import { ValidationObserver } from "vee-validate"
+import { ValidationObserver } from 'vee-validate'
 import VPasswordFieldWithValidation from '~/components/inputs/VPasswordFieldWithValidation'
 
 export default {
@@ -86,20 +86,20 @@ export default {
     async update() {
       const result = await this.$refs.obs.validate();
       if(result) {
-        const { data } = await this.form.patch(base_api+'/user/update-password/'+this.id);
-        if(data.success) {
+        try {
+          const response = await this.form.patch(base_api+'/user/update-password/'+this.id);
           this.close();
           this.$toast.fire({
             type: 'success',
             title: 'Password Updated'
           });
-        }
-        else {
+          console.log(response);
+        } catch(error) {
+          console.error(error);
           this.$toast.fire({
-            type: 'danger',
+            type: 'error',
             title: 'Failed'
           });
-          console.log(data.console);
         }
       }
     },

@@ -46,7 +46,6 @@ class PresenceController extends Controller
 
     public function store(Request $req)
     {
-        // dd(strtotime('2019-09-01'));
         Presence::create([
             'child_id' => $req->child_id,
             'check_in' => time(),
@@ -74,13 +73,17 @@ class PresenceController extends Controller
                 ->where('month', $i)
                 ->where('year', $year)
                 ->orderBy('check_in')
-                ->pluck('check_in');
+                ->get()
+                ->toArray();
 
-            $month[$i]['week1'] = $presence[0] ?? 'x';
-            $month[$i]['week2'] = $presence[1] ?? 'x';
-            $month[$i]['week3'] = $presence[2] ?? 'x';
-            $month[$i]['week4'] = $presence[3] ?? 'x';
-            $month[$i]['week5'] = $presence[4] ?? 'x';
+            $w = 1;
+            for($x = 0; $x < 5; $x++) { 
+                $month[$i]['week'.$w++] = [
+                    'id' => $presence[$x]['id'] ?? null,
+                    'check_in' => $presence[$x]['check_in'] ?? 0,
+                    'datetime' => $presence[$x]['datetime'] ?? 'x'
+                ];
+            }
         }
 
         $result = [
@@ -96,9 +99,37 @@ class PresenceController extends Controller
         //
     }
 
-    public function update(Request $req, Presence $presence)
+    public function update(Request $req, $child_id)
     {
-        //
+        $id = $req->id ?? null;
+        $date = $req->date ?? null;
+        $time = $req->time ?? null;
+        $epoch = strtotime($date.' '.$time);
+        $month = date('n', $epoch);
+        $year = date('Y', $epoch);
+
+        $model = Presence::where('id', $id)->orWhere(function($q) use($date, $child_id) {
+            $q->whereRaw("FROM_UNIXTIME(check_in, '%Y-%m-%d') = '$date'");
+            $q->where('child_id', $child_id);
+        })->first();
+        if($model) {
+            $model->update([
+                'child_id' => $child_id,
+                'check_in' => $epoch,
+                'month' => $month,
+                'year' => $year
+            ]);
+        }
+        else {
+            Presence::create([
+                'child_id' => $child_id,
+                'check_in' => $epoch,
+                'month' => $month,
+                'year' => $year
+            ]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy(Presence $presence)

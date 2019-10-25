@@ -5,6 +5,7 @@ import Button from './Button'
 import Checkbox from './Checkbox'
 import FormImportPoint from './modals/FormImportPoint'
 import FormChangePassword from './modals/FormChangePassword'
+import FormEditPresence from './modals/FormEditPresence'
 import QrCode from './modals/QrCode'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
@@ -16,6 +17,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Checkbox,
   FormImportPoint,
   FormChangePassword,
+  FormEditPresence,
   QrCode,
   HasError,
   AlertError,

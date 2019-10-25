@@ -127,7 +127,7 @@
 
 <script>
 import Form from 'vform'
-import { ValidationObserver } from "vee-validate"
+import { ValidationObserver } from 'vee-validate'
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 import VPasswordFieldWithValidation from '~/components/inputs/VPasswordFieldWithValidation'
 import VRadioWithValidation from '~/components/inputs/VRadioWithValidation'
@@ -244,7 +244,7 @@ export default {
       this.form.role = item.role == 'admin' ? 1 : 2;
     },
     checkDelete(id) {
-      this.$swal.fire(window.confirmDelete).then((result) => {
+      this.$swal.fire(this.confirmDelete).then((result) => {
         if(result.value) {
           this.delete(id);
         }

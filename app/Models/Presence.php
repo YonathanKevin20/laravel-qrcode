@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Presence extends Model
 {
     protected $guarded = ['id'];
+    protected $appends = ['datetime'];
     public $timestamps = false;
 
     public function child()
@@ -14,13 +15,13 @@ class Presence extends Model
         return $this->belongsTo('App\Models\Child', 'child_id', 'id');
     }
 
-    public function getCheckInAttribute($value)
+    public function getDatetimeAttribute()
     {
-        if(date('H:i:s', $value) == '00:00:00') {
-            $date = date('d/m', $value);
+        if(date('H:i:s', $this->check_in) == '00:00:00') {
+            $date = date('d/m', $this->check_in);
         }
         else {
-            $date = date('d/m - H:i:s', $value);
+            $date = date('d/m - H:i:s', $this->check_in);
         }
         return $date;
     }

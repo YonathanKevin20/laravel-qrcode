@@ -4,12 +4,12 @@
       <v-card outlined>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Name: {{ name }}</v-list-item-title>
+            <v-list-item-title>Name: {{ child.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Grade: {{ grade }}</v-list-item-title>
+            <v-list-item-title>Grade: {{ child.grade }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -25,13 +25,13 @@
     </v-col>
     <v-col cols="2" offset="5" class="text-center">
       <a @click="$router.go(-1)">
-        <v-btn small outlined color="default">
-          <v-icon small left>mdi-arrow-left</v-icon>Back
+        <v-btn small outlined>
+          <v-icon small left>mdi-arrow-left</v-icon>{{ $t('back') }}
         </v-btn>
       </a>
     </v-col>
     <v-col cols="12">
-      <v-simple-table>
+      <v-simple-table :id="id">
         <template v-slot:default>
           <thead>
             <tr>
@@ -46,15 +46,56 @@
           <tbody>
             <tr v-for="(item, index) in items" :key="index">
               <td>{{ months[index] }}</td>
-              <td>{{ item.week1 }}</td>
-              <td>{{ item.week2 }}</td>
-              <td>{{ item.week3 }}</td>
-              <td>{{ item.week4 }}</td>
-              <td>{{ item.week5 }}</td>
+              <td>
+                {{ item.week1.datetime }}
+                <v-icon
+                  color="orange"
+                  title="Edit"
+                  small
+                  @click="openEditPresenceDialog(item.week1)">mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                {{ item.week2.datetime }}
+                <v-icon
+                  color="orange"
+                  title="Edit"
+                  small
+                  @click="openEditPresenceDialog(item.week2)">mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                {{ item.week3.datetime }}
+                <v-icon
+                  color="orange"
+                  title="Edit"
+                  small
+                  @click="openEditPresenceDialog(item.week3)">mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                {{ item.week4.datetime }}
+                <v-icon
+                  color="orange"
+                  title="Edit"
+                  small
+                  @click="openEditPresenceDialog(item.week4)">mdi-pencil
+                </v-icon>
+              </td>
+              <td>
+                {{ item.week5.datetime }}
+                <v-icon
+                  color="orange"
+                  title="Edit"
+                  small
+                  @click="openEditPresenceDialog(item.week5)">mdi-pencil
+                </v-icon>
+              </td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
+      <form-edit-presence></form-edit-presence>
     </v-col>
   </v-row>
 </template>
@@ -64,13 +105,26 @@ import axios from 'axios'
 
 export default {
   data: () => ({
+    id: 'table-detail-presence',
     years: window.config.listYears,
     year: new Date().getFullYear(),
     months: ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'],
     items: [],
-    grade: '',
-    name: '',
+    child: '',
   }),
+
+  created() {
+    let vm = this;
+    this.$eventHub.$on('refresh-table', function(id) {
+      if(id == vm.id) {
+        vm.getData();
+      }
+    });
+  },
+
+  beforeDestroy() {
+    this.$eventHub.$off('refresh-table');
+  },
 
   mounted() {
     this.getData();
@@ -90,13 +144,15 @@ export default {
             year: this.year
           }
         });
-        this.grade = response.data.model.grade;
-        this.name = response.data.model.name;
+        this.child = response.data.model;
         this.items = response.data.month;
         console.log(response);
       } catch (error) {
         console.error(error);
       }
+    },
+    openEditPresenceDialog(item) {
+      this.$eventHub.$emit('form-edit-presence', item, true);
     }
   }
 }

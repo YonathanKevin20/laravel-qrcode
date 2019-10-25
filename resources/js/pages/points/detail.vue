@@ -16,8 +16,8 @@
     </v-col>
     <v-col cols="2" offset="8" class="text-center">
       <a @click="$router.go(-1)">
-        <v-btn small outlined color="default">
-          <v-icon small left>mdi-arrow-left</v-icon>Back
+        <v-btn small outlined>
+          <v-icon small left>mdi-arrow-left</v-icon>{{ $t('back') }}
         </v-btn>
       </a>
     </v-col>
