@@ -32,13 +32,12 @@ class PresenceController extends Controller
                 $presence = $presence->where('year', $year);
             }
 
-            $presence = $presence->orderBy('check_in')->pluck('check_in');
+            $presence = $presence->orderBy('check_in')->get()->toArray();
 
-            $m->week1 = $presence[0] ?? 'x';
-            $m->week2 = $presence[1] ?? 'x';
-            $m->week3 = $presence[2] ?? 'x';
-            $m->week4 = $presence[3] ?? 'x';
-            $m->week5 = $presence[4] ?? 'x';
+            $w = 1;
+            for($x = 0; $x < 5; $x++) { 
+                $m['week'.$w++] = $presence[$x]['datetime'] ?? 'x';
+            }
         }
 
         return response()->json($model);
