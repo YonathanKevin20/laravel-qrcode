@@ -72,14 +72,14 @@ export default {
 
   created() {
     let vm = this;
-    this.$eventHub.$on('form-change-password-'+this.id, function(item, value) {
+    this.$eventHub.$on('form-change-password', function(item, value) {
       vm.name = item.name;
       vm.dialog = value;
     });
   },
 
   beforeDestroy() {
-    this.$eventHub.$off('form-change-password-'+this.id);
+    this.$eventHub.$off('form-change-password');
   },
 
   methods: {

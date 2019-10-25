@@ -116,11 +116,9 @@
             title="Delete"
             @click="checkDelete(item.id)">mdi-delete
           </v-icon>
-          <form-change-password
-            :id='item.id'>
-          </form-change-password>
         </template>
       </v-data-table>
+      <form-change-password></form-change-password>
     </v-col>
   </v-row>
 </template>
@@ -277,7 +275,7 @@ export default {
       });
     },
     openChangePasswordDialog(item) {
-      this.$eventHub.$emit('form-change-password-'+item.id, item, true);
+      this.$eventHub.$emit('form-change-password', item, true);
     }
   }
 }
