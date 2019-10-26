@@ -48,10 +48,9 @@ export default {
     VPasswordFieldWithValidation,
   },
 
-  props: ['id'],
-
   data: () => ({
     dialog: false,
+    id: '',
     name: '',
     form: new Form({
       password: '',
@@ -73,6 +72,7 @@ export default {
   created() {
     let vm = this;
     this.$eventHub.$on('form-change-password', function(item, value) {
+      vm.id = item.id;
       vm.name = item.name;
       vm.dialog = value;
     });
