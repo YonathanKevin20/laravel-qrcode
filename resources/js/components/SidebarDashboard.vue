@@ -6,9 +6,6 @@
           <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">{{ $t('dashboard') }}</router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'children.list' }" class="nav-link" active-class="active">{{ $t('children') }}</router-link>
-        </li>
-        <li class="nav-item">
           <router-link :to="{ name: 'points.list' }" class="nav-link" active-class="active">{{ $t('points') }}</router-link>
         </li>
         <li class="nav-item">
@@ -22,6 +19,9 @@
         </a>
       </h6>
       <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <router-link :to="{ name: 'children.list' }" class="nav-link" active-class="active">{{ $t('children') }}</router-link>
+        </li>
         <li class="nav-item">
           <router-link :to="{ name: 'users.list' }" class="nav-link" active-class="active">{{ $t('users') }}</router-link>
         </li>

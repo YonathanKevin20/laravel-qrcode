@@ -13,8 +13,8 @@ Vue.prototype.$eventHub = new Vue()
 Vue.config.productionTip = false
 Vue.use(swalPlugin)
 Vue.mixin({
-  methods: {
-    confirmDelete() {
+  data: () => ({
+    get confirmDelete() {
       let conf = {
         title: 'Are you sure?',
         type: 'warning',
@@ -25,6 +25,8 @@ Vue.mixin({
       }
       return conf;
     },
+  }),
+  methods: {
     customDatetime(datetime) {
       let day = ('0'+datetime.getDate()).slice(-2);
       let month = ('0'+(datetime.getMonth()+1)).slice(-2);
