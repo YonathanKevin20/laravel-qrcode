@@ -44,14 +44,14 @@ class PointController extends Controller
     public function showChild(Request $req, $child_id)
     {
         $model = Point::where('child_id', $child_id)->orderBy('time', 'desc')->get();
+        $child = Child::findorFail($child_id);
 
-        foreach($model as $m) {
-            $child = Child::find($m->child_id);
-            $m->name = $child->name;
-            $m->grade = $child->grade;
-        }
+        $result = [
+            'model' => $model,
+            'child' => $child
+        ];
 
-        return response()->json($model);
+        return response()->json($result);
     }
 
     public function edit(Point $point)
