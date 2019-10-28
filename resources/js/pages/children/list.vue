@@ -133,11 +133,9 @@
             title="Delete"
             @click="checkDelete(item.id)">mdi-delete
           </v-icon>
-          <qr-code
-            :id='item.id'>
-          </qr-code>
         </template>
       </v-data-table>
+      <qr-code></qr-code>
     </v-col>
   </v-row>
 </template>
@@ -300,7 +298,7 @@ export default {
       this.$refs.menu.save(date);
     },
     openQrCodeDialog(item) {
-      this.$eventHub.$emit('qr-code-'+item.id, item, true);
+      this.$eventHub.$emit('qr-code', item, true);
     },
   }
 }

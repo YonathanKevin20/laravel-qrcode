@@ -49,10 +49,9 @@ import axios from 'axios'
 export default {
   name: 'QrCode',
 
-  props: ['id'],
-
   data: () => ({
     dialog: false,
+    id: '',
     url_download: '',
     encode: '',
     name: '',
@@ -72,8 +71,9 @@ export default {
 
   created() {
     let vm = this;
-    this.$eventHub.$on('qr-code-'+this.id, function(item, value) {
-      vm.url_download = base_api+'/child/download-qrcode/'+item.id,
+    this.$eventHub.$on('qr-code', function(item, value) {
+      vm.id = item.id;
+      vm.url_download = base_api+'/child/download-qrcode/'+item.id;
       vm.getData();
       vm.name = item.name;
       vm.dialog = value;
@@ -81,7 +81,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$eventHub.$off('qr-code-'+this.id);
+    this.$eventHub.$off('qr-code');
   },
 
   methods: {
@@ -106,6 +106,7 @@ export default {
       }
     },
     close() {
+      this.encode = '';
       this.dialog = false;
     },
   }
