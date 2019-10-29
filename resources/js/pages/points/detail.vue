@@ -101,6 +101,19 @@ export default {
         }
       })
     },
+    async delete(id) {
+      try {
+        const response = await axios.delete('/api/point/'+id);
+        this.getData();
+        this.$toast.fire({
+          type: 'success',
+          title: 'Deleted'
+        });
+        console.log(response);
+      } catch(error) {
+        console.error(error);
+      }
+    },
   }
 }
 </script>

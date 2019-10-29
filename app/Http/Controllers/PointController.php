@@ -64,9 +64,12 @@ class PointController extends Controller
         //
     }
 
-    public function destroy(Point $point)
+    public function destroy($id)
     {
-        //
+        $model = Point::findOrFail($id);
+        $model->delete();
+    
+        return response()->json(['success' => true]);
     }
 
     public function import(Request $req)
