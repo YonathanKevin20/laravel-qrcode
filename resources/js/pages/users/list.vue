@@ -138,10 +138,6 @@ export default {
     VRadioWithValidation,
   },
 
-  mounted() {
-    this.getData();
-  },
-
   data: () => ({
     roleOptions: [
       { label: 'admin', value: 1 },
@@ -179,6 +175,10 @@ export default {
     dialog(val) {
       val || this.close()
     },
+  },
+
+  mounted() {
+    this.getData();
   },
 
   methods: {
