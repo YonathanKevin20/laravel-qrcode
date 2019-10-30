@@ -16,4 +16,20 @@ class ChartController extends Controller
 
         return response()->json($result);
     }
+
+    public function getGrade()
+    {
+        $labels = Child::groupBy('grade')->pluck('grade')->toArray();
+        $series = Child::selectRaw('COUNT(*) as total')
+            ->groupBy(['grade'])
+            ->pluck('total');
+        $labels = array_map(function($value) { return 'Grade '.$value; }, $labels);
+
+        $result = [
+            'labels' => $labels,
+            'series' => $series
+        ];
+
+        return response()->json($result);
+    }
 }

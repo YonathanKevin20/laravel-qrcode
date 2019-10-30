@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::group(['prefix' => 'chart'], function() {
         Route::get('/get-gender', 'ChartController@getGender');
+        Route::get('/get-grade', 'ChartController@getGrade');
     });
 
     Route::apiResource('child', 'ChildController');

@@ -4,16 +4,32 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2>{{ $t('dashboard') }}</h2>
       </div>
-      <v-btn
-        small
-        outlined
-        @click="getDataGender">{{ $t('refresh') }}</v-btn>
-      <vue-apex-charts
-        width="400"
-        type="pie"
-        :options="chartGender.options"
-        :series="chartGender.series">
-      </vue-apex-charts>
+      <v-row>
+        <v-col cols="6">
+          <v-btn
+            small
+            outlined
+            @click="getDataGender">{{ $t('refresh') }}</v-btn>
+          <vue-apex-charts
+            width="80%"
+            type="pie"
+            :options="chartGender.options"
+            :series="chartGender.series">
+          </vue-apex-charts>
+        </v-col>
+        <v-col cols="6">
+          <v-btn
+            small
+            outlined
+            @click="getDataGrade">{{ $t('refresh') }}</v-btn>
+          <vue-apex-charts
+            width="80%"
+            type="donut"
+            :options="chartGrade.options"
+            :series="chartGrade.series">
+          </vue-apex-charts>
+        </v-col>
+      </v-row>
     </v-container>
   </main>
 </template>
@@ -54,11 +70,26 @@ export default {
           }
         }]
       }
+    },
+    chartGrade: {
+      series: [],
+      options: {
+        labels: [],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: '100%',
+            },
+          }
+        }]
+      }
     }
   }),
 
   mounted() {
     this.getDataGender();
+    this.getDataGrade();
   },
 
   methods: {
@@ -66,6 +97,18 @@ export default {
       try {
         const response = await axios.get('/api/chart/get-gender');
         this.chartGender.series = response.data;
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataGrade() {
+      try {
+        const response = await axios.get('/api/chart/get-grade');
+        this.chartGrade.options = {
+          labels: response.data.labels
+        };
+        this.chartGrade.series = response.data.series;
         console.log(response);
       } catch (error) {
         console.error(error);
