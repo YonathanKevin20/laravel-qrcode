@@ -50,5 +50,6 @@
   "submit": "Submit",
   "add_points": "Add Point(s)",
   "users": "Users",
-  "back": "Back"
+  "back": "Back",
+  "refresh": "Refresh"
 }

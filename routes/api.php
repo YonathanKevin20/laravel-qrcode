@@ -13,15 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth:api'], function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::get('/online-user', function (Request $request) {
-        return $request->user();
+    Route::get('/online-user', function(Request $req) {
+        return $req->user();
     });
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    Route::group(['prefix' => 'chart'], function() {
+        Route::get('/get-gender', 'ChartController@getGender');
+    });
 
     Route::apiResource('child', 'ChildController');
     Route::apiResource('point', 'PointController');
