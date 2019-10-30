@@ -62,7 +62,7 @@ export default {
         colors: ['#3999d6', '#e83e77'],
         labels: ['Male', 'Female'],
         responsive: [{
-          breakpoint: 480,
+          breakpoint: 720,
           options: {
             chart: {
               width: '100%',
@@ -76,7 +76,7 @@ export default {
       options: {
         labels: [],
         responsive: [{
-          breakpoint: 480,
+          breakpoint: 720,
           options: {
             chart: {
               width: '100%',
