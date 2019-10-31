@@ -141,7 +141,6 @@ export default {
             type: 'success',
             title: 'Updated'
           });
-          console.log(response);
         } catch(error) {
           console.error(error);
           this.$toast.fire({

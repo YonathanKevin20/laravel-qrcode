@@ -93,7 +93,6 @@ export default {
             type: 'success',
             title: 'Password Updated'
           });
-          console.log(response);
         } catch(error) {
           console.error(error);
           this.$toast.fire({

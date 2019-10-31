@@ -188,7 +188,6 @@ export default {
         const response  = await this.form.get('/api/user');
         this.items = response.data;
         this.loading = false;
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -213,7 +212,6 @@ export default {
           type: 'success',
           title: 'Created'
         });
-        console.log(response);
       } catch(error) {
         console.error(error);
       }
@@ -227,7 +225,6 @@ export default {
           type: 'success',
           title: 'Updated'
         });
-        console.log(response);
       } catch(error) {
         console.error(error);
       }
@@ -256,7 +253,6 @@ export default {
           type: 'success',
           title: 'Deleted'
         });
-        console.log(response);
       } catch(error) {
         console.error(error);
       }

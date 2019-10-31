@@ -146,7 +146,6 @@ export default {
         });
         this.child = response.data.model;
         this.items = response.data.month;
-        console.log(response);
       } catch (error) {
         console.error(error);
       }

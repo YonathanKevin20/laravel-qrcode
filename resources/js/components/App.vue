@@ -1,5 +1,11 @@
 <template>
   <v-app id="scumbag">
+    <v-navigation-drawer
+      app
+      v-model="drawer">
+      <sidebar-dashboard></sidebar-dashboard>
+    </v-navigation-drawer>
+    <navbar-dashboard @clicked="onClickChild"></navbar-dashboard>
     <loading ref="loading" />
     <v-content id="mando">
       <transition name="page" mode="out-in">
@@ -10,6 +16,8 @@
 </template>
 
 <script>
+import NavbarDashboard from '~/components/NavbarDashboard'
+import SidebarDashboard from '~/components/SidebarDashboard'
 import Loading from './Loading'
 
 // Load layout components dynamically.
@@ -28,12 +36,15 @@ export default {
   el: '#app',
 
   components: {
+    NavbarDashboard,
+    SidebarDashboard,
     Loading
   },
 
   data: () => ({
     layout: null,
-    defaultLayout: 'default'
+    defaultLayout: 'default',
+    drawer: null
   }),
 
   metaInfo () {
@@ -61,6 +72,9 @@ export default {
       }
 
       this.layout = layouts[layout]
+    },
+    onClickChild(value) {
+      this.drawer = value;
     }
   }
 }

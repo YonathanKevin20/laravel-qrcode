@@ -159,7 +159,6 @@ export default {
         const response  = await this.form.get('/api/point');
         this.items = response.data;
         this.loading = false;
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -181,7 +180,6 @@ export default {
           type: 'success',
           title: 'Created'
         });
-        console.log(response);
       } catch(error) {
         console.error(error);
       }

@@ -89,7 +89,6 @@ export default {
         this.grade = response.data.child.grade;
         this.name = response.data.child.name;
         this.items = response.data.model;
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -109,7 +108,6 @@ export default {
           type: 'success',
           title: 'Deleted'
         });
-        console.log(response);
       } catch(error) {
         console.error(error);
       }

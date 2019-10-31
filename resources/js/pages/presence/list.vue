@@ -119,7 +119,6 @@ export default {
         });
         this.items = response.data;
         this.loading = false;
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
