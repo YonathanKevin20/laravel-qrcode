@@ -61,7 +61,6 @@ class ChildController extends Controller
     public function generateQrCode($id)
     {
         $model = Child::findOrFail($id);
-
         $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url('api/child/'.$model->id)));
 
         return response()->json($qrcode);
@@ -70,10 +69,10 @@ class ChildController extends Controller
     public function downloadQrCode($id)
     {
         $model = Child::findOrFail($id);
+        $filename = 'qrcode_'.$model->id.'.png';
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id), public_path('storage/qrcodes/'.$filename)));
 
-        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id), public_path('storage/qrcodes/'.$model->name.'.png')));
-
-        return response()->download(public_path('storage/qrcodes/'.$model->name.'.png'), $model->name.'.png');
+        return response()->download(public_path('storage/qrcodes/'.$filename), $filename);
     }
 
     public function exportTemplatePoint()
