@@ -61,7 +61,8 @@ class ChildController extends Controller
     public function generateQrCode($id)
     {
         $model = Child::findOrFail($id);
-        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url('api/child/'.$model->id)));
+        $data = url('api/child/'.$model->id);
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate($data));
 
         return response()->json($qrcode);
     }
@@ -69,8 +70,9 @@ class ChildController extends Controller
     public function downloadQrCode($id)
     {
         $model = Child::findOrFail($id);
-        $filename = 'qrcode_'.$model->id.'.png';
-        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate(url($model->id), public_path('storage/qrcodes/'.$filename)));
+        $data = url('api/child/'.$model->id);
+        $filename = 'qrcode_'.$model->id.'_'.$model->name.'.png';
+        $qrcode = base64_encode(QrCode::format('png')->size(300)->margin(3)->generate($data, public_path('storage/qrcodes/'.$filename)));
 
         return response()->download(public_path('storage/qrcodes/'.$filename), $filename);
     }
