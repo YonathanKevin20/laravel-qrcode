@@ -3,7 +3,7 @@
     <v-text-field
       slot-scope="{ errors, valid }"
       v-model="innerValue"
-      :append-icon="show ? 'visibility' : 'visibility_off'"
+      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
       :error-messages="errors"
       :type="show ? 'text' : 'password'"
       counter

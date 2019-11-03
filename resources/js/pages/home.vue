@@ -32,15 +32,10 @@
   </v-container>
 </template>
 
-<style>
-[role="main"] {
-  padding-top: 58px; /* Space for fixed navbar */
-}
-</style>
-
 <script>
 import axios from 'axios'
 import VueApexCharts from 'vue-apexcharts'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -85,9 +80,15 @@ export default {
     }
   }),
 
+  computed: mapGetters({
+    authenticated: 'auth/check'
+  }),
+
   mounted() {
-    this.getDataGender();
-    this.getDataGrade();
+    if(this.authenticated) {
+      this.getDataGender();
+      this.getDataGrade();
+    }
   },
 
   methods: {

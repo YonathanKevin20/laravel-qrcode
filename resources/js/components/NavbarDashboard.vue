@@ -85,8 +85,8 @@ export default {
       // Log out the user.
       await this.$store.dispatch('auth/logout')
 
-      // Redirect to login.
-      this.$router.push({ name: 'login' })
+      // Redirect to welcome.
+      this.$router.push({ name: 'welcome' })
     },
     emitToParent() {
       if(this.$vuetify.breakpoint.width >= 1264) {

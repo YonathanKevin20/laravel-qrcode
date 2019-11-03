@@ -9,12 +9,6 @@
   </v-container>
 </template>
 
-<style>
-[role="main"] {
-  padding-top: 58px; /* Space for fixed navbar */
-}
-</style>
-
 <script>
 export default {
   layout: 'dashboard',

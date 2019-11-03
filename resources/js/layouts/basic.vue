@@ -1,14 +1,12 @@
 <template>
-  <div class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
-    <child />
-  </div>
+  <v-app id="scumbag">
+    <v-content id="mando">
+      <div class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
+        <child></child>
+      </div>
+    </v-content>
+  </v-app>
 </template>
-
-<script>
-export default {
-  name: 'BasicLayout'
-}
-</script>
 
 <style lang="scss">
 .basic-layout {
@@ -28,3 +26,9 @@ export default {
   }
 }
 </style>
+
+<script>
+export default {
+  name: 'BasicLayout'
+}
+</script>
