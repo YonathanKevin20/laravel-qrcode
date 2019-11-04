@@ -35,7 +35,6 @@
 <script>
 import axios from 'axios'
 import VueApexCharts from 'vue-apexcharts'
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -80,15 +79,9 @@ export default {
     }
   }),
 
-  computed: mapGetters({
-    authenticated: 'auth/check'
-  }),
-
   mounted() {
-    if(this.authenticated) {
-      this.getDataGender();
-      this.getDataGrade();
-    }
+    this.getDataGender();
+    this.getDataGrade();
   },
 
   methods: {
@@ -103,9 +96,9 @@ export default {
     async getDataGrade() {
       try {
         const response = await axios.get('/api/chart/get-grade');
-        this.chartGrade.options = {
+        this.chartGrade.options = {...this.chartGrade.options, ...{
           labels: response.data.labels
-        };
+        }};
         this.chartGrade.series = response.data.series;
       } catch (error) {
         console.error(error);
