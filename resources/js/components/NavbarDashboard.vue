@@ -49,13 +49,6 @@
         </v-list-item-group>
       </v-list>
     </v-menu>
-    <!-- Guest -->
-    <template v-else>
-      <router-link :to="{ name: 'login' }" class="nav-link text-light">{{ $t('login') }}</router-link>
-      <!-- <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-        {{ $t('register') }}
-      </router-link> -->
-    </template>
   </v-app-bar>
 </template>
 
