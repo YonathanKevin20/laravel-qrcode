@@ -29,6 +29,21 @@
         </vue-apex-charts>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-btn
+          small
+          outlined
+          @click="getDataTotalPresence">{{ $t('refresh') }}</v-btn>
+        <vue-apex-charts
+          height="360px"
+          width="100%"
+          type="bar"
+          :options="chartTotalPresence.options"
+          :series="chartTotalPresence.series">
+        </vue-apex-charts>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -76,12 +91,62 @@ export default {
           }
         }]
       }
+    },
+    chartTotalPresence: {
+      series: [{
+        name: 'W1',
+        data: []
+      }, {
+        name: 'W2',
+        data: []
+      }, {
+        name: 'W3',
+        data: []
+      }, {
+        name: 'W4',
+        data: []
+      }, {
+        name: 'W5',
+        data: []
+      }],
+      options: {
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            endingShape: 'rounded'
+          }
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        },
+        yaxis: {
+          title: {
+            text: 'Total'
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val
+            }
+          }
+        }
+      }
     }
   }),
 
   mounted() {
     this.getDataGender();
     this.getDataGrade();
+    this.getDataTotalPresence();
   },
 
   methods: {
@@ -100,6 +165,27 @@ export default {
           labels: response.data.labels
         }};
         this.chartGrade.series = response.data.series;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataTotalPresence() {
+      this.chartTotalPresence.series = [
+        {data: []},
+        {data: []},
+        {data: []},
+        {data: []},
+        {data: []}
+      ];
+      try {
+        const response = await axios.get('/api/chart/get-total-presence');
+        this.chartTotalPresence.series = [
+          {data: response.data[1]},
+          {data: response.data[2]},
+          {data: response.data[3]},
+          {data: response.data[4]},
+          {data: response.data[5]}
+        ];
       } catch (error) {
         console.error(error);
       }

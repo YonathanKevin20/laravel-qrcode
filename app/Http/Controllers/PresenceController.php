@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Models\Point;
 use App\Models\Presence;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class PresenceController extends Controller
         $model = Child::select(['id', 'name']);
 
         if($grade && $grade != 'All') {
-            $model = $model->where('grade', $grade);
+            $model = $model->whereGrade($grade);
         }
 
         $model = $model->get();
@@ -45,12 +46,30 @@ class PresenceController extends Controller
 
     public function store(Request $req)
     {
+        $check_in = time();
         Presence::create([
             'child_id' => $req->child_id,
-            'check_in' => time(),
+            'check_in' => $check_in,
             'month' => date('n'),
             'year' => date('Y')
         ]);
+
+        if(date('H:i:s', $check_in) <= '09:00:00') {
+            Point::create([
+                'child_id' => $req->child_id,
+                'qty' => 2,
+                'info' => 'tidak telat',
+                'time' => $check_in
+            ]);
+        }
+        else {
+            Point::create([
+                'child_id' => $req->child_id,
+                'qty' => 1,
+                'info' => 'telat',
+                'time' => $check_in
+            ]);
+        }
 
         return response()->json(['success' => true]);
     }
@@ -66,7 +85,6 @@ class PresenceController extends Controller
 
         $model = Child::select(['id', 'name', 'grade'])->where('id', $child_id)->first();
 
-        $month = array();
         for($i = 1; $i <= 12; $i++) {
             $presence = Presence::where('child_id', $child_id)
                 ->where('month', $i)
@@ -76,7 +94,7 @@ class PresenceController extends Controller
                 ->toArray();
 
             $w = 1;
-            for($x = 0; $x < 5; $x++) { 
+            for($x = 0; $x < 5; $x++) {
                 $month[$i]['week'.$w++] = [
                     'id' => $presence[$x]['id'] ?? null,
                     'check_in' => $presence[$x]['check_in'] ?? 0,

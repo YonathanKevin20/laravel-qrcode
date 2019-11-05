@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api'], function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::get('/online-user', function(Request $req) {
+    Route::get('online-user', function(Request $req) {
         return $req->user();
     });
 
@@ -24,8 +24,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
     Route::group(['prefix' => 'chart'], function() {
-        Route::get('/get-gender', 'ChartController@getGender');
-        Route::get('/get-grade', 'ChartController@getGrade');
+        Route::get('get-gender', 'ChartController@getGender');
+        Route::get('get-grade', 'ChartController@getGrade');
+        Route::get('get-total-presence', 'ChartController@getTotalPresence');
     });
 
     Route::apiResource('child', 'ChildController');
@@ -34,28 +35,28 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('user', 'UserController');
 
     Route::group(['prefix' => 'child'], function() {
-        Route::get('/generate-qrcode/{id}', 'ChildController@generateQrCode');
-        Route::get('/download-qrcode/{id}', 'ChildController@downloadQrCode');
+        Route::get('generate-qrcode/{id}', 'ChildController@generateQrCode');
+        Route::get('download-qrcode/{id}', 'ChildController@downloadQrCode');
     });
 
     Route::group(['prefix' => 'export'], function() {
-        Route::get('/export-template-point', 'ChildController@exportTemplatePoint');
+        Route::get('export-template-point', 'ChildController@exportTemplatePoint');
     });
 
     Route::group(['prefix' => 'import'], function() {
-        Route::post('/point', 'PointController@import');
+        Route::post('point', 'PointController@import');
     });
 
     Route::group(['prefix' => 'point'], function() {
-        Route::get('/show-child/{child_id}', 'PointController@showChild');
+        Route::get('show-child/{child_id}', 'PointController@showChild');
     });
 
     Route::group(['prefix' => 'presence'], function() {
-        Route::get('/show-child/{child_id}', 'PresenceController@showChild');
+        Route::get('show-child/{child_id}', 'PresenceController@showChild');
     });
 
     Route::group(['prefix' => 'user'], function() {
-        Route::patch('/update-password/{id}', 'UserController@updatePassword');
+        Route::patch('update-password/{id}', 'UserController@updatePassword');
     });
 });
 

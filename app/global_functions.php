@@ -21,3 +21,10 @@ function listYears() {
     $years = App\Models\Presence::select(['year'])->groupBy('year')->pluck('year');
     return $years;
 }
+
+function weekOfMonth($check_in) {
+    //Get the first day of the month.
+    $firstOfMonth = strtotime(date('Y-m-01', $check_in));
+    //Apply above formula.
+    return intval(date('W', $check_in)) - intval(date('W', $firstOfMonth)) + 1;
+}
