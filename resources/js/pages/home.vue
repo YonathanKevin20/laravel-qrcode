@@ -8,7 +8,8 @@
         <v-btn
           small
           outlined
-          @click="getDataGender">{{ $t('refresh') }}</v-btn>
+          @click="getDataGender">{{ $t('refresh') }}
+        </v-btn>
         <vue-apex-charts
           width="80%"
           type="pie"
@@ -20,7 +21,8 @@
         <v-btn
           small
           outlined
-          @click="getDataGrade">{{ $t('refresh') }}</v-btn>
+          @click="getDataGrade">{{ $t('refresh') }}
+        </v-btn>
         <vue-apex-charts
           width="80%"
           type="donut"
@@ -31,10 +33,26 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-btn
-          small
-          outlined
-          @click="getDataTotalPresence">{{ $t('refresh') }}</v-btn>
+        <div class="d-block">
+          <v-btn
+            small
+            outlined
+            @click="getDataTotalPresence">{{ $t('refresh') }}
+          </v-btn>
+        </div>
+        <div class="d-block">
+          <v-row>
+            <v-col cols="3">
+              <v-select
+                :items="grades"
+                v-model="grade"
+                label="Grade"
+                outlined
+                hide-details>
+              </v-select>
+            </v-col>
+          </v-row>
+        </div>
         <vue-apex-charts
           height="360px"
           width="100%"
@@ -63,6 +81,8 @@ export default {
   },
 
   data: () => ({
+    grades: ['All', 1, 2, 3],
+    grade: 'All',
     chartGender: {
       series: [],
       options: {
@@ -116,6 +136,13 @@ export default {
             endingShape: 'rounded'
           }
         },
+        title: {
+          text: 'Total Presence',
+          align: 'center',
+          style: {
+            fontSize: '13pt'
+          }
+        },
         stroke: {
           show: true,
           width: 2,
@@ -149,6 +176,12 @@ export default {
     this.getDataTotalPresence();
   },
 
+  watch: {
+    grade(val) {
+      this.getDataTotalPresence()
+    }
+  },
+
   methods: {
     async getDataGender() {
       try {
@@ -178,7 +211,11 @@ export default {
         {data: []}
       ];
       try {
-        const response = await axios.get('/api/chart/get-total-presence');
+        const response = await axios.get('/api/chart/get-total-presence', {
+          params: {
+            grade: this.grade
+          }
+        });
         this.chartTotalPresence.series = [
           {data: response.data[1]},
           {data: response.data[2]},
