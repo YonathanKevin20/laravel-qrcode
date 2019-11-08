@@ -79,9 +79,12 @@
                                 name="Gender" />
                             </v-col>
                             <v-col cols="6">
-                              <VTextFieldWithValidation
-                                rules="required|numeric"
-                                v-model="form.grade"
+                              <VSelectWithValidation
+                                rules="required"
+                                v-model="form.grade_id"
+                                :items="grades"
+                                item-value="id"
+                                item-text="name"
                                 label="Grade" />
                             </v-col>
                           </v-row>
@@ -145,12 +148,14 @@ import Form from 'vform'
 import { ValidationObserver } from 'vee-validate'
 import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 import VRadioWithValidation from '~/components/inputs/VRadioWithValidation'
+import VSelectWithValidation from '~/components/inputs/VSelectWithValidation'
 
 export default {
   components: {
     ValidationObserver,
     VTextFieldWithValidation,
     VRadioWithValidation,
+    VSelectWithValidation
   },
 
   data: () => ({
@@ -158,6 +163,7 @@ export default {
       { label: 'Male', value: 'm' },
       { label: 'Female', value: 'f' },
     ],
+    grades: [],
     dialog: false,
     loading: true,
     search: '',
@@ -166,7 +172,7 @@ export default {
       { text: 'Name', value: 'name' },
       { text: 'Age', value: 'age'},
       { text: 'Gender', value: 'gender' },
-      { text: 'Grade', value: 'grade' },
+      { text: 'Grade', value: 'grade.name' },
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
     items: [],
@@ -177,7 +183,7 @@ export default {
       gender: '',
       place_of_birth: '',
       date_of_birth: '',
-      grade: '',
+      grade_id: '',
     }),
   }),
 
@@ -197,6 +203,7 @@ export default {
   },
 
   mounted() {
+    this.getDataGrade();
     this.getData();
   },
 
@@ -207,6 +214,14 @@ export default {
         const response  = await this.form.get('/api/child');
         this.items = response.data;
         this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataGrade() {
+      try {
+        const response  = await this.form.get('/api/grade');
+        this.grades = response.data;
       } catch (error) {
         console.error(error);
       }
@@ -256,7 +271,7 @@ export default {
       this.form.gender = item.gender;
       this.form.place_of_birth = item.place_of_birth;
       this.form.date_of_birth = item.date_of_birth;
-      this.form.grade = item.grade;
+      this.form.grade_id = item.grade_id;
     },
     checkDelete(id) {
       this.$swal.fire(this.confirmDelete).then((result) => {

@@ -11,7 +11,7 @@ class ChildController extends Controller
 {
     public function index()
     {
-        $model = Child::orderBy('grade')->get();
+        $model = Child::with(['grade'])->orderBy('name')->get();
 
         return response()->json($model);
     }
@@ -23,7 +23,7 @@ class ChildController extends Controller
             'gender' => $req->gender,
             'place_of_birth' => $req->place_of_birth,
             'date_of_birth' => $req->date_of_birth,
-            'grade' => $req->grade,
+            'grade_id' => $req->grade_id,
         ]);
 
         return response()->json(['success' => true]);
@@ -44,7 +44,7 @@ class ChildController extends Controller
             'gender' => $req->gender,
             'place_of_birth' => $req->place_of_birth,
             'date_of_birth' => $req->date_of_birth,
-            'grade' => $req->grade,
+            'grade_id' => $req->grade_id,
         ]);
 
         return response()->json(['success' => true]);

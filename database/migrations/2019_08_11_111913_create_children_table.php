@@ -19,8 +19,13 @@ class CreateChildrenTable extends Migration
             $table->enum('gender', ['m', 'f']);
             $table->string('place_of_birth');
             $table->date('date_of_birth');
-            $table->string('grade');
+            $table->integer('grade_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('grade_id')
+                ->references('id')
+                ->on('grades')
+                ->onDelete('cascade');
         });
     }
 
