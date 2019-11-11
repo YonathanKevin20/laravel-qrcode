@@ -43,7 +43,7 @@
             </tr>
             <tr v-else v-for="(item, index) in items" :key="index">
               <td>{{ item.qty }}</td>
-              <td>{{ item.info }}</td>
+              <td>{{ item.info_point.name }}</td>
               <td>{{ item.time }}</td>
               <td class="text-center">
                 <v-icon
@@ -103,7 +103,6 @@ export default {
     async delete(id) {
       try {
         const response = await axios.delete('/api/point/'+id);
-        this.getData();
         this.$toast.fire({
           type: 'success',
           title: 'Deleted'
@@ -111,6 +110,7 @@ export default {
       } catch(error) {
         console.error(error);
       }
+      this.getData();
     },
   }
 }

@@ -17,12 +17,16 @@ class CreatePointsTable extends Migration
             $table->increments('id');
             $table->integer('child_id')->unsigned();
             $table->integer('qty')->unsigned();
-            $table->string('info');
+            $table->integer('info_point_id')->unsigned();
             $table->integer('time')->unsigned();
 
             $table->foreign('child_id')
                 ->references('id')
                 ->on('children')
+                ->onDelete('cascade');
+            $table->foreign('info_point_id')
+                ->references('id')
+                ->on('info_points')
                 ->onDelete('cascade');
         });
     }

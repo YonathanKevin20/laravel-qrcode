@@ -51,6 +51,16 @@
         </v-list-item-content>
       </v-list-item>
     </router-link>
+    <router-link :to="{ name: 'info_point.list' }" active-class="active">
+      <v-list-item link>
+        <v-list-item-action>
+          <v-icon>mdi-database</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ $t('info_point') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </router-link>
     <router-link :to="{ name: 'users.list' }" active-class="active">
       <v-list-item link>
         <v-list-item-action>

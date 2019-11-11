@@ -14,6 +14,11 @@ class Point extends Model
         return $this->belongsTo('App\Models\Child', 'child_id', 'id');
     }
 
+    public function infoPoint()
+    {
+        return $this->belongsTo('App\Models\InfoPoint', 'info_point_id', 'id');
+    }
+
     public function getTimeAttribute($value)
     {
         $date = date('d/m/Y - H:i:s', $value);

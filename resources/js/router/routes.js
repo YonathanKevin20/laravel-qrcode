@@ -33,6 +33,12 @@ export default [
       { path: '', name: 'grade.list', component: page('grade/list.vue') }
     ]
   },
+  { path: '/info-point',
+    component: page('info_point/index.vue'),
+    children: [
+      { path: '', name: 'info_point.list', component: page('info_point/list.vue') }
+    ]
+  },
   { path: '/points',
     component: page('points/index.vue'),
     children: [

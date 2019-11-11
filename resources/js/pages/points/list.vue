@@ -36,8 +36,10 @@
                             <v-col cols="6">
                               <VSelectWithValidation
                                 rules="required"
-                                v-model="form.info"
-                                :items="infoOptions"
+                                v-model="form.info_point_id"
+                                :items="infoPoints"
+                                item-value="id"
+                                item-text="name"
                                 label="Info" />
                             </v-col>
                           </v-row>
@@ -103,7 +105,7 @@ export default {
 
   data: () => ({
     id: 'table-points',
-    infoOptions: ['tambah', 'bonus'],
+    infoPoints: [],
     dialog: false,
     loading: true,
     search: '',
@@ -119,7 +121,7 @@ export default {
       child_id: '',
       name: '',
       qty: '',
-      info: '',
+      info_point_id: '',
     }),
   }),
 
@@ -137,6 +139,7 @@ export default {
   },
 
   mounted() {
+    this.getDataInfoPoint();
     this.getData();
   },
 
@@ -159,6 +162,14 @@ export default {
         const response  = await this.form.get('/api/point');
         this.items = response.data;
         this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataInfoPoint() {
+      try {
+        const response  = await this.form.get('/api/info-point');
+        this.infoPoints = response.data;
       } catch (error) {
         console.error(error);
       }

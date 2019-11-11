@@ -31,7 +31,7 @@ class PointController extends Controller
         Point::create([
             'child_id' => $req->child_id,
             'qty' => $req->qty,
-            'info' => $req->info,
+            'info_point_id' => $req->info_point_id,
             'time' => time(),
         ]);
 
@@ -45,7 +45,10 @@ class PointController extends Controller
 
     public function showChild(Request $req, $child_id)
     {
-        $model = Point::where('child_id', $child_id)->orderBy('time', 'desc')->get();
+        $model = Point::with(['infoPoint'])
+            ->where('child_id', $child_id)
+            ->orderBy('time', 'desc')
+            ->get();
         $child = Child::findorFail($child_id);
 
         $result = [

@@ -131,7 +131,7 @@ export default {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/grade');
+        const response  = await this.form.get('/api/info-point');
         this.items = response.data;
         this.loading = false;
       } catch (error) {
@@ -151,7 +151,7 @@ export default {
     },
     async store() {
       try {
-        const response = await this.form.post('/api/grade');
+        const response = await this.form.post('/api/info-point');
         this.close();
         this.$toast.fire({
           type: 'success',
@@ -164,7 +164,7 @@ export default {
     },
     async update() {
       try {
-        const response = await this.form.patch('/api/grade/'+this.form.id);
+        const response = await this.form.patch('/api/info-point/'+this.form.id);
         this.close();
         this.$toast.fire({
           type: 'success',
@@ -190,7 +190,7 @@ export default {
     },
     async delete(id) {
       try {
-        const response = await this.form.delete('/api/grade/'+id);
+        const response = await this.form.delete('/api/info-point/'+id);
         this.$toast.fire({
           type: 'success',
           title: 'Deleted'
