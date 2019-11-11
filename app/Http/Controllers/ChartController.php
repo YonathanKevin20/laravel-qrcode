@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Models\Grade;
 use App\Models\Presence;
 use Illuminate\Http\Request;
 
@@ -20,11 +21,12 @@ class ChartController extends Controller
 
     public function getGrade()
     {
-        $labels = Child::groupBy('grade')->pluck('grade')->toArray();
-        $series = Child::selectRaw('COUNT(*) as total')
-            ->groupBy(['grade'])
-            ->pluck('total');
-        $labels = array_map(function($value) { return 'Grade '.$value; }, $labels);
+        $labels = Grade::orderBy('id')->pluck('name');
+        $model = Grade::get('id');
+        foreach($model as $m) {
+            $child_total = Child::whereGradeId($m->id)->count();
+            $series[] = $child_total ?? 0;
+        }
 
         $result = [
             'labels' => $labels,
