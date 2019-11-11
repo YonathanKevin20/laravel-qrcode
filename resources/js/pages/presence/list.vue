@@ -34,12 +34,14 @@
                   <v-col cols="4">
                     <v-select
                       :items="grades"
+                      item-value="id"
+                      item-text="name"
                       v-model="grade"
                       label="Grade"
                       outlined
                       hide-details>
                     </v-select>
-                  </v-col>                  
+                  </v-col>
                 </v-row>
               </v-col>
               <v-col cols="3">
@@ -74,7 +76,7 @@ export default {
     year: new Date().getFullYear(),
     months: window.config.listMonths,
     month: new Date().getMonth()+1,
-    grades: ['All', 1, 2, 3],
+    grades: [],
     grade: 'All',
     loading: true,
     search: '',
@@ -91,6 +93,7 @@ export default {
   }),
 
   mounted() {
+    this.getDataGrade();
     this.getData();
   },
 
@@ -119,6 +122,15 @@ export default {
         });
         this.items = response.data;
         this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataGrade() {
+      try {
+        const response  = await axios.get('/api/grade');
+        this.grades = response.data;
+        this.grades = ['All'].concat(this.grades);
       } catch (error) {
         console.error(error);
       }

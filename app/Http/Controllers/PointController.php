@@ -12,13 +12,15 @@ class PointController extends Controller
 {
     public function index()
     {
-        $model = Child::selectRaw('children.id as child_id, name, grade, IFNULL(SUM(qty), 0) as qty')
+        $model = Child::selectRaw('children.id as child_id, name, grade_id, IFNULL(SUM(qty), 0) as qty')
+            ->with(['grade'])
             ->leftJoin('points', 'children.id', '=', 'points.child_id')
             ->groupBy([
                 'children.id',
                 'name',
-                'grade',
+                'grade_id',
             ])
+            ->orderBy('name')
             ->get();
 
         return response()->json($model);
@@ -66,10 +68,9 @@ class PointController extends Controller
 
     public function destroy($id)
     {
-        $model = Point::findOrFail($id);
-        $model->delete();
+        $model = Point::findOrFail($id)->delete();
     
-        return response()->json(['success' => true]);
+        return response()->json($model);
     }
 
     public function import(Request $req)

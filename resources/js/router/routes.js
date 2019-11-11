@@ -27,6 +27,12 @@ export default [
       { path: '', name: 'children.list', component: page('children/list.vue') }
     ]
   },
+  { path: '/grade',
+    component: page('grade/index.vue'),
+    children: [
+      { path: '', name: 'grade.list', component: page('grade/list.vue') }
+    ]
+  },
   { path: '/points',
     component: page('points/index.vue'),
     children: [

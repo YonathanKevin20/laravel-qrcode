@@ -110,7 +110,7 @@ export default {
     method: 'store',
     headers: [
       { text: 'Name', value: 'name' },
-      { text: 'Grade', value: 'grade' },
+      { text: 'Grade', value: 'grade.name' },
       { text: 'Point(s)', value: 'qty' },
       { text: 'Actions', value: 'action', sortable: false, align: 'center' },
     ],
@@ -174,7 +174,6 @@ export default {
     async store() {
       try {
         const response = await this.form.post('/api/point');
-        this.getData();
         this.close();
         this.$toast.fire({
           type: 'success',
@@ -183,6 +182,7 @@ export default {
       } catch(error) {
         console.error(error);
       }
+      this.getData();
     },
     addPoint(item) {
       this.dialog = true;

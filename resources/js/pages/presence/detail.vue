@@ -9,7 +9,7 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Grade: {{ child.grade }}</v-list-item-title>
+            <v-list-item-title>Grade: {{ child.grade.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -110,7 +110,12 @@ export default {
     year: new Date().getFullYear(),
     months: ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Oktober', 'November', 'December'],
     items: [],
-    child: '',
+    child: {
+      name: '',
+      grade: {
+        name: ''
+      }
+    },
   }),
 
   created() {

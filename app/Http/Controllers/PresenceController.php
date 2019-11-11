@@ -18,7 +18,9 @@ class PresenceController extends Controller
         $model = Child::select(['id', 'name']);
 
         if($grade && $grade != 'All') {
-            $model = $model->whereGrade($grade);
+            $model = $model->whereHas('grade', function($q) use($grade) {
+                $q->whereId($grade);
+            });
         }
 
         $model = $model->get();
@@ -83,7 +85,7 @@ class PresenceController extends Controller
     {
         $year = $req->year ?? date('Y');
 
-        $model = Child::select(['id', 'name', 'grade'])->where('id', $child_id)->first();
+        $model = Child::select(['id', 'name', 'grade_id'])->with(['grade'])->where('id', $child_id)->first();
 
         for($i = 1; $i <= 12; $i++) {
             $presence = Presence::where('child_id', $child_id)

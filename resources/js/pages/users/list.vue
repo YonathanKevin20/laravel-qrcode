@@ -206,7 +206,6 @@ export default {
     async store() {
       try {
         const response = await this.form.post('/api/user');
-        this.getData();
         this.close();
         this.$toast.fire({
           type: 'success',
@@ -215,11 +214,11 @@ export default {
       } catch(error) {
         console.error(error);
       }
+      this.getData();
     },
     async update() {
       try {
         const response = await this.form.patch('/api/user/'+this.form.id);
-        this.getData();
         this.close();
         this.$toast.fire({
           type: 'success',
@@ -228,6 +227,7 @@ export default {
       } catch(error) {
         console.error(error);
       }
+      this.getData();
     },
     editItem(item) {
       this.dialog = true;
@@ -248,7 +248,6 @@ export default {
     async delete(id) {
       try {
         const response = await this.form.delete('/api/user/'+id);
-        this.getData();
         this.$toast.fire({
           type: 'success',
           title: 'Deleted'
@@ -256,6 +255,7 @@ export default {
       } catch(error) {
         console.error(error);
       }
+      this.getData();
     },
     close() {
       this.dialog = false;

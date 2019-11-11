@@ -52,10 +52,9 @@ class ChildController extends Controller
 
     public function destroy($id)
     {
-        $model = Child::findOrFail($id);
-        $model->delete();
+        $model = Child::findOrFail($id)->delete();
     
-        return response()->json(['success' => true]);
+        return response()->json($model);
     }
 
     public function generateQrCode($id)

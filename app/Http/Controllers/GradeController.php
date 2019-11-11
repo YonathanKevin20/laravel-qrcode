@@ -14,33 +14,34 @@ class GradeController extends Controller
         return response()->json($model);
     }
 
-    public function create()
+    public function store(Request $req)
+    {
+        Grade::create([
+            'name' => $req->name
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function show($id)
     {
         //
     }
 
-    public function store(Request $request)
+    public function update(Request $req, $id)
     {
-        //
+        $model = Grade::findOrFail($id);
+        $model->update([
+            'name' => $req->name
+        ]);
+
+        return response()->json(['success' => true]);
     }
 
-    public function show(Grade $grade)
+    public function destroy($id)
     {
-        //
-    }
+        $model = Grade::findOrFail($id)->delete();
 
-    public function edit(Grade $grade)
-    {
-        //
-    }
-
-    public function update(Request $request, Grade $grade)
-    {
-        //
-    }
-
-    public function destroy(Grade $grade)
-    {
-        //
+        return response()->json($model);
     }
 }
