@@ -24,8 +24,7 @@ class CreateChildrenTable extends Migration
 
             $table->foreign('grade_id')
                 ->references('id')
-                ->on('grades')
-                ->onDelete('cascade');
+                ->on('grades');
         });
     }
 

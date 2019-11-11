@@ -26,8 +26,7 @@ class CreatePointsTable extends Migration
                 ->onDelete('cascade');
             $table->foreign('info_point_id')
                 ->references('id')
-                ->on('info_points')
-                ->onDelete('cascade');
+                ->on('info_points');
         });
     }
 
