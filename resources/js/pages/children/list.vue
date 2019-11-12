@@ -6,12 +6,16 @@
         :items="items"
         :search="search"
         :loading="loading"
+        :items-per-page="20"
+        :footer-props="{
+          'items-per-page-options': [10, 20, 50, -1]
+        }"
         loading-text="Loading... Please wait"
         class="elevation-1">
         <template v-slot:top>
           <v-container>
             <v-row align="center">
-              <v-col cols="3">
+              <v-col cols="2">
                 <v-dialog v-model="dialog" max-width="700px">
                   <template v-slot:activator="{ on }">
                     <v-btn
@@ -64,7 +68,7 @@
                                   color="blue"
                                   v-model="form.date_of_birth"
                                   :max="new Date().toISOString().substr(0, 10)"
-                                  min="1950-01-01"
+                                  min="2000-01-01"
                                   @change="saveDate">
                                 </v-date-picker>
                               </v-menu>
@@ -88,6 +92,45 @@
                                 label="Grade" />
                             </v-col>
                           </v-row>
+                          <v-row>
+                            <v-col cols="12">
+                              <VTextFieldWithValidation
+                                v-model="form.address"
+                                label="Address" />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12">
+                              <VTextFieldWithValidation
+                                v-model="form.telephone"
+                                label="Telephone" />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="6">
+                              <VTextFieldWithValidation
+                                v-model="form.father"
+                                label="Father's Name" />
+                            </v-col>
+                            <v-col cols="6">
+                              <VTextFieldWithValidation
+                                v-model="form.mother"
+                                label="Mother's Name" />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="6">
+                              <VTextFieldWithValidation
+                                v-model="form.school"
+                                label="School" />
+                            </v-col>
+                            <v-col cols="6">
+                              <VSelectWithValidation
+                                v-model="form.school_class"
+                                :items="schoolClassOptions"
+                                label="School Class" />
+                            </v-col>
+                          </v-row>
                         </v-container>
                       </v-card-text>
                       <v-card-actions>
@@ -107,7 +150,18 @@
                   </ValidationObserver>
                 </v-dialog>
               </v-col>
-              <v-col offset="6" cols="3">
+              <v-col cols="3">
+                <v-select
+                  :items="gradesParam"
+                  item-value="id"
+                  item-text="name"
+                  v-model="grade"
+                  label="Grade"
+                  outlined
+                  hide-details>
+                </v-select>
+              </v-col>
+              <v-col offset="4" cols="3">
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
@@ -163,7 +217,10 @@ export default {
       { label: 'Male', value: 'm' },
       { label: 'Female', value: 'f' },
     ],
+    schoolClassOptions: ['0', 'TK. A', 'TK. B', '1', '2', '3', '4', '5', '6'],
     grades: [],
+    gradesParam: [],
+    grade: 'All',
     dialog: false,
     loading: true,
     search: '',
@@ -183,7 +240,13 @@ export default {
       gender: '',
       place_of_birth: '',
       date_of_birth: '',
-      grade_id: '',
+      address: '',
+      telephone: '',
+      father: '',
+      mother: '',
+      school: '',
+      school_class: '',
+      grade_id: ''
     }),
   }),
 
@@ -200,6 +263,9 @@ export default {
     menuDate(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
+    grade(val) {
+      this.getData()
+    }
   },
 
   mounted() {
@@ -211,7 +277,11 @@ export default {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/child');
+        const response  = await this.form.get('/api/child', {
+          params: {
+            grade: this.grade
+          }
+        });
         this.items = response.data;
         this.loading = false;
       } catch (error) {
@@ -221,7 +291,8 @@ export default {
     async getDataGrade() {
       try {
         const response  = await this.form.get('/api/grade');
-        this.grades = response.data;
+        this.gradesParam = this.grades = response.data;
+        this.gradesParam = ['All'].concat(this.gradesParam);
       } catch (error) {
         console.error(error);
       }
@@ -271,6 +342,12 @@ export default {
       this.form.gender = item.gender;
       this.form.place_of_birth = item.place_of_birth;
       this.form.date_of_birth = item.date_of_birth;
+      this.form.address = item.address;
+      this.form.telephone = item.telephone;
+      this.form.father = item.father;
+      this.form.mother = item.mother;
+      this.form.school = item.school;
+      this.form.school_class = item.school_class;
       this.form.grade_id = item.grade_id;
     },
     checkDelete(id) {

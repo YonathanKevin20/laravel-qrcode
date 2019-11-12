@@ -19,7 +19,13 @@ class CreateChildrenTable extends Migration
             $table->enum('gender', ['m', 'f']);
             $table->string('place_of_birth');
             $table->date('date_of_birth');
-            $table->integer('grade_id')->unsigned()->nullable();
+            $table->string('address')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('father')->nullable();
+            $table->string('mother')->nullable();
+            $table->string('school')->nullable();
+            $table->string('school_class')->nullable();
+            $table->integer('grade_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('grade_id')

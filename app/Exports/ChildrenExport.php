@@ -16,7 +16,7 @@ class ChildrenExport implements FromCollection, WithHeadings, WithMapping
 	{
 		return [
 			'#',
-			'NAMA',
+			'NAME',
 			'QTY',
 		];
 	}

@@ -114,6 +114,7 @@ export default {
         });
         console.log(data.console);
       }
+      this.close();
     },
     close() {
       this.dialog = false;

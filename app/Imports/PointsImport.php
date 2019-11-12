@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Child;
+use App\Models\InfoPoint;
 use App\Models\Point;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -17,14 +18,15 @@ class PointsImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChu
     public function model(array $row)
     {
         $name = strtolower($row['name']);
-        $child = Child::whereRaw('LOWER(name) LIKE (?)',["%{$name}%"])->first(['id']);
+        $child = Child::whereRaw('LOWER(name) LIKE (?)', ["%{$name}%"])->first(['id']);
+        $info_point = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%import%"])->first(['id']);
 
         if($child) {
             return new Point([
                 'child_id' => $child->id,
                 'qty' => $row['qty'],
-                'info' => 'import',
-                'time' => time(),
+                'info_point_id' => $info_point->id,
+                'time' => time()
             ]);
         }
     }

@@ -9,9 +9,19 @@ use QrCode;
 
 class ChildController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        $model = Child::with(['grade'])->orderBy('name')->get();
+        $grade = $req->grade ?? null;
+
+        $model = Child::with(['grade']);
+
+        if($grade && $grade != 'All') {
+            $model = $model->whereHas('grade', function($q) use($grade) {
+                $q->whereId($grade);
+            });
+        }
+
+        $model = $model->orderBy('name')->get();
 
         return response()->json($model);
     }
@@ -23,7 +33,13 @@ class ChildController extends Controller
             'gender' => $req->gender,
             'place_of_birth' => $req->place_of_birth,
             'date_of_birth' => $req->date_of_birth,
-            'grade_id' => $req->grade_id,
+            'address' => $req->address,
+            'telephone' => $req->telephone,
+            'father' => $req->father,
+            'mother' => $req->mother,
+            'school' => $req->school,
+            'school_class' => $req->school_class,
+            'grade_id' => $req->grade_id
         ]);
 
         return response()->json(['success' => true]);
@@ -44,7 +60,13 @@ class ChildController extends Controller
             'gender' => $req->gender,
             'place_of_birth' => $req->place_of_birth,
             'date_of_birth' => $req->date_of_birth,
-            'grade_id' => $req->grade_id,
+            'address' => $req->address,
+            'telephone' => $req->telephone,
+            'father' => $req->father,
+            'mother' => $req->mother,
+            'school' => $req->school,
+            'school_class' => $req->school_class,
+            'grade_id' => $req->grade_id
         ]);
 
         return response()->json(['success' => true]);

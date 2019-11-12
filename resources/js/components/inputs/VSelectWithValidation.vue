@@ -4,7 +4,6 @@
       slot-scope="{ errors, valid }"
       v-model="innerValue"
       :error-messages="errors"
-      :success="valid"
       v-bind="$attrs"
       v-on="$listeners">
     </v-select>

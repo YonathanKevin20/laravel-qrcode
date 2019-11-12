@@ -7,6 +7,10 @@
         :items="items"
         :search="search"
         :loading="loading"
+        :items-per-page="20"
+        :footer-props="{
+          'items-per-page-options': [10, 20, 50, -1]
+        }"
         loading-text="Loading... Please wait"
         class="elevation-1">
         <template v-slot:top>
