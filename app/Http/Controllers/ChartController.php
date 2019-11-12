@@ -44,7 +44,9 @@ class ChartController extends Controller
         $child_id = Child::select(['id']);
 
         if($grade && $grade != 'All') {
-            $child_id = $child_id->whereGrade($grade);
+            $child_id = $child_id->whereHas('grade', function($q) use($grade) {
+                $q->whereId($grade);
+            });
         }
 
         $child_id = $child_id->pluck('id');

@@ -8,7 +8,7 @@
         <v-btn
           small
           outlined
-          @click="getDataGender">{{ $t('refresh') }}
+          @click="getChartGender">{{ $t('refresh') }}
         </v-btn>
         <vue-apex-charts
           width="80%"
@@ -21,7 +21,7 @@
         <v-btn
           small
           outlined
-          @click="getDataGrade">{{ $t('refresh') }}
+          @click="getChartGrade">{{ $t('refresh') }}
         </v-btn>
         <vue-apex-charts
           width="80%"
@@ -37,7 +37,7 @@
           <v-btn
             small
             outlined
-            @click="getDataTotalPresence">{{ $t('refresh') }}
+            @click="getChartTotalPresence">{{ $t('refresh') }}
           </v-btn>
         </div>
         <div class="d-block">
@@ -45,6 +45,8 @@
             <v-col cols="3">
               <v-select
                 :items="grades"
+                item-value="id"
+                item-text="name"
                 v-model="grade"
                 label="Grade"
                 outlined
@@ -81,7 +83,7 @@ export default {
   },
 
   data: () => ({
-    grades: ['All', 1, 2, 3],
+    grades: [],
     grade: 'All',
     chartGender: {
       series: [],
@@ -171,19 +173,29 @@ export default {
   }),
 
   mounted() {
-    this.getDataGender();
     this.getDataGrade();
-    this.getDataTotalPresence();
+    this.getChartGender();
+    this.getChartGrade();
+    this.getChartTotalPresence();
   },
 
   watch: {
     grade(val) {
-      this.getDataTotalPresence()
+      this.getChartTotalPresence()
     }
   },
 
   methods: {
-    async getDataGender() {
+    async getDataGrade() {
+      try {
+        const response  = await axios.get('/api/grade');
+        this.grades = response.data;
+        this.grades = ['All'].concat(this.grades);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getChartGender() {
       try {
         const response = await axios.get('/api/chart/get-gender');
         this.chartGender.series = response.data;
@@ -191,7 +203,7 @@ export default {
         console.error(error);
       }
     },
-    async getDataGrade() {
+    async getChartGrade() {
       try {
         const response = await axios.get('/api/chart/get-grade');
         this.chartGrade.options = {...this.chartGrade.options, ...{
@@ -202,7 +214,7 @@ export default {
         console.error(error);
       }
     },
-    async getDataTotalPresence() {
+    async getChartTotalPresence() {
       this.chartTotalPresence.series = [
         {data: []},
         {data: []},
