@@ -115,7 +115,7 @@ export default {
       grade: {
         name: ''
       }
-    },
+    }
   }),
 
   created() {

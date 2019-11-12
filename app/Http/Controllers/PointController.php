@@ -10,8 +10,10 @@ use DB;
 
 class PointController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
+        $grade = $req->grade ?? null;
+
         $model = Child::selectRaw('children.id as child_id, name, grade_id, IFNULL(SUM(qty), 0) as qty')
             ->with(['grade'])
             ->leftJoin('points', 'children.id', '=', 'points.child_id')
@@ -19,9 +21,15 @@ class PointController extends Controller
                 'children.id',
                 'name',
                 'grade_id',
-            ])
-            ->orderBy('name')
-            ->get();
+            ]);
+
+        if($grade && $grade != 'All') {
+            $model = $model->whereHas('grade', function($q) use($grade) {
+                $q->whereId($grade);
+            });
+        }
+
+        $model = $model->orderBy('name')->get();
 
         return response()->json($model);
     }
@@ -49,7 +57,7 @@ class PointController extends Controller
             ->where('child_id', $child_id)
             ->orderBy('time', 'desc')
             ->get();
-        $child = Child::findorFail($child_id);
+        $child = Child::select(['id', 'name', 'grade_id'])->with(['grade'])->where('id', $child_id)->first();
 
         $result = [
             'model' => $model,

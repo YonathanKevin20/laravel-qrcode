@@ -4,12 +4,12 @@
       <v-card outlined>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Name: {{ name }}</v-list-item-title>
+            <v-list-item-title>Name: {{ child.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Grade: {{ grade }}</v-list-item-title>
+            <v-list-item-title>Grade: {{ child.grade.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
@@ -66,8 +66,12 @@ import axios from 'axios'
 export default {
   data: () => ({
     items: [],
-    grade: '',
-    name: '',
+    child: {
+      name: '',
+      grade: {
+        name: ''
+      }
+    }
   }),
 
   mounted() {
@@ -86,8 +90,7 @@ export default {
     async getData() {
       try {
         const response = await axios.get('/api/point/show-child/'+this.$route.params.child_id);
-        this.grade = response.data.child.grade;
-        this.name = response.data.child.name;
+        this.child = response.data.child;
         this.items = response.data.model;
       } catch (error) {
         console.error(error);

@@ -16,7 +16,7 @@
         <template v-slot:top>
           <v-container>
             <v-row align="center">
-              <v-col cols="3">
+              <v-col cols="2">
                 <v-btn
                   class="white--text"
                   color="purple"
@@ -66,7 +66,18 @@
                   </ValidationObserver>
                 </v-dialog>
               </v-col>
-              <v-col offset="6" cols="3">
+              <v-col cols="3">
+                <v-select
+                  :items="grades"
+                  item-value="id"
+                  item-text="name"
+                  v-model="grade"
+                  label="Grade"
+                  outlined
+                  hide-details>
+                </v-select>
+              </v-col>
+              <v-col offset="4" cols="3">
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
@@ -109,6 +120,8 @@ export default {
 
   data: () => ({
     id: 'table-points',
+    grades: [],
+    grade: 'All',
     infoPoints: [],
     dialog: false,
     loading: true,
@@ -143,6 +156,7 @@ export default {
   },
 
   mounted() {
+    this.getDataGrade();
     this.getDataInfoPoint();
     this.getData();
   },
@@ -157,15 +171,31 @@ export default {
     dialog(val) {
       val || this.close()
     },
+    grade(val) {
+      this.getData()
+    }
   },
 
   methods: {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/point');
+        const response  = await this.form.get('/api/point', {
+          params: {
+            grade: this.grade
+          }
+        });
         this.items = response.data;
         this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getDataGrade() {
+      try {
+        const response  = await this.form.get('/api/grade');
+        this.grades = response.data;
+        this.grades = ['All'].concat(this.grades);
       } catch (error) {
         console.error(error);
       }
