@@ -124,6 +124,7 @@ class PresenceController extends Controller
         $date = $req->date ?? null;
         $time = $req->time ?? null;
         $epoch = strtotime($date.' '.$time);
+        $epoch = $epoch != 0 ? $epoch : strtotime($date.' 00:00:00');
         $month = date('n', $epoch);
         $year = date('Y', $epoch);
 
