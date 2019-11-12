@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-card outlined>
         <v-list-item>
           <v-list-item-content>
@@ -23,7 +23,7 @@
         hide-details>
       </v-select>
     </v-col>
-    <v-col cols="2" offset="5" class="text-center">
+    <v-col cols="2" offset="4" class="text-center">
       <a @click="$router.go(-1)">
         <v-btn small outlined>
           <v-icon small left>mdi-arrow-left</v-icon>{{ $t('back') }}
