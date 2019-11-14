@@ -54,8 +54,7 @@ class PresenceController extends Controller
         $start_time = Configuration::getValue('start_time');
         $on_time_point = Configuration::getValue('on_time_point');
         $late_point = Configuration::getValue('late_point');
-        // $check_in = time();
-        $check_in = 1572747297;
+        $check_in = time();
         $late = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%late%"])->first(['id']);
         $on_time = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%on time%"])->first(['id']);
 
