@@ -24,5 +24,32 @@ class DatabaseSeeder extends Seeder
                 'name' => 'import'
             ]
         ]);
+
+        DB::table('configurations')->insert([
+            [
+                'parameter' => 'start_time',
+                'value' => '09:00:00',
+                'description' => 'Jam Mulai',
+                'type' => 'string'
+            ],
+            [
+                'parameter' => 'end_time',
+                'value' => '10:00:00',
+                'description' => 'Jam Selesai',
+                'type' => 'string'
+            ],
+            [
+                'parameter' => 'on_time_point',
+                'value' => '2',
+                'description' => 'Poin Tepat Waktu',
+                'type' => 'integer'
+            ],
+            [
+                'parameter' => 'late_point',
+                'value' => '1',
+                'description' => 'Poin Terlambat',
+                'type' => 'integer'
+            ]
+        ]);
     }
 }
