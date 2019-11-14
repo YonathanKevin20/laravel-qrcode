@@ -28,3 +28,27 @@ function weekOfMonth($check_in) {
     //Apply above formula.
     return intval(date('W', $check_in)) - intval(date('W', $firstOfMonth)) + 1;
 }
+
+function getWeeks($date, $rollover) {
+    $cut = substr($date, 0, 8);
+    $daylen = 86400;
+
+    $timestamp = strtotime($date);
+    $first = strtotime($cut . "00");
+    $elapsed = ($timestamp - $first) / $daylen;
+
+    $weeks = 1;
+
+    for($i = 1; $i <= $elapsed; $i++) {
+        $dayfind = $cut . (strlen($i) < 2 ? '0' . $i : $i);
+        $daytimestamp = strtotime($dayfind);
+
+        $day = strtolower(date("l", $daytimestamp));
+
+        if($day == strtolower($rollover)) $weeks++;
+    }
+
+    return $weeks;
+
+    // echo getWeeks("2011-06-11", "sunday");
+}

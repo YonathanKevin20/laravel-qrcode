@@ -71,11 +71,16 @@
         </v-list-item-content>
       </v-list-item>
     </router-link>
+    <router-link :to="{ name: 'configuration.list' }" active-class="active">
       <v-list-item link>
+        <v-list-item-action>
+          <v-icon>mdi-settings</v-icon>
+        </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>Configuration</v-list-item-title>
+          <v-list-item-title>{{ $t('configuration') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+    </router-link>
   </v-list>
 </template>
 

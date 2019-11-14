@@ -59,6 +59,12 @@ export default [
       { path: '', name: 'users.list', component: page('users/list.vue') }
     ]
   },
+  { path: '/configuration',
+    component: page('configuration/index.vue'),
+    children: [
+      { path: '', name: 'configuration.list', component: page('configuration/list.vue') }
+    ]
+  },
 
   { path: '*', component: page('errors/404.vue') }
 ]

@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
 
     Route::apiResource('child', 'ChildController');
+    Route::apiResource('configuration', 'ConfigurationController');
     Route::apiResource('grade', 'GradeController');
     Route::apiResource('info-point', 'InfoPointController');
     Route::apiResource('point', 'PointController');
