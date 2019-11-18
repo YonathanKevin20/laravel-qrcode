@@ -51,50 +51,65 @@ class PresenceController extends Controller
 
     public function store(Request $req)
     {
+        $child_id = $req->child_id;
         $start_time = Configuration::getValue('start_time');
         $on_time_point = Configuration::getValue('on_time_point');
         $late_point = Configuration::getValue('late_point');
         $check_in = time();
+        $date = date('Y-m-d', $check_in);
         $late = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%late%"])->first(['id']);
         $on_time = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%on time%"])->first(['id']);
 
-        DB::beginTransaction();
-        try {
-            Presence::create([
-                'child_id' => $req->child_id,
-                'check_in' => $check_in,
-                'month' => date('n'),
-                'year' => date('Y')
-            ]);
-
-            if(date('H:i:s', $check_in) <= $start_time) {
-                Point::create([
-                    'child_id' => $req->child_id,
-                    'qty' => $on_time_point,
-                    'info_point_id' => $on_time->id,
-                    'time' => $check_in
-                ]);
-            }
-            else {
-                Point::create([
-                    'child_id' => $req->child_id,
-                    'qty' => $late_point,
-                    'info_point_id' => $late->id,
-                    'time' => $check_in
-                ]);
-            }
-
-            DB::commit();
-            return response()->json(['success' => true]);
-        } catch(\Illuminate\Database\QueryException $ex) {
-            DB::rollback();
-            return response()->json([
-                'message' => 'Terjadi kesalahan pada database',
-                'console' => $ex->getMessage(),
-            ]);
+        if(!$child_id) {
+            return response()->json(['message' => "Column 'child_id' cannot be NULL"], 203);
         }
 
-        return response()->json(['success' => true]);
+        $model = Presence::where(function($q) use($date, $child_id) {
+            $q->whereRaw("FROM_UNIXTIME(check_in, '%Y-%m-%d') = '$date'");
+            $q->where('child_id', $child_id);
+        })->count();
+        if($model > 0) {
+            return response()->json(['message' => 'Data already exists']);
+        }
+        else {
+            DB::beginTransaction();
+            try {
+                Presence::create([
+                    'child_id' => $child_id,
+                    'check_in' => $check_in,
+                    'month' => date('n'),
+                    'year' => date('Y')
+                ]);
+
+                if(date('H:i:s', $check_in) <= $start_time) {
+                    Point::create([
+                        'child_id' => $child_id,
+                        'qty' => $on_time_point,
+                        'info_point_id' => $on_time->id,
+                        'time' => $check_in
+                    ]);
+                }
+                else {
+                    Point::create([
+                        'child_id' => $child_id,
+                        'qty' => $late_point,
+                        'info_point_id' => $late->id,
+                        'time' => $check_in
+                    ]);
+                }
+
+                DB::commit();
+                return response()->json(['success' => true]);
+            } catch(\Illuminate\Database\QueryException $ex) {
+                DB::rollback();
+                return response()->json([
+                    'message' => 'Terjadi kesalahan pada database',
+                    'console' => $ex->getMessage(),
+                ]);
+            }
+
+            return response()->json(['success' => true]);
+        }
     }
 
     public function show($id)

@@ -78,5 +78,5 @@ Route::group(['middleware' => 'guest:api'], function () {
 });
 
 Route::get('{any}', function() {
-    return response()->json(['message' => 'Not Found.'], 404);
+    return response()->json(['message' => 'Not found'], 404);
 })->where('any', '^(?!api).*$');
