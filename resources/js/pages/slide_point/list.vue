@@ -1,0 +1,69 @@
+<template>
+  <v-row>
+    <v-carousel
+      cycle
+      style="height: 100%">
+      <v-carousel-item v-for="(item, i) in items">
+        <v-sheet
+          :color="colors[i]"
+          height="100%">
+          <v-row
+            class="fill-height"
+            align="center"
+            justify="center">
+            <v-card
+              v-for="child in item"
+              color="white"
+              class="pa-md-4 mx-lg-auto"
+              width="250px"
+              outlined>
+              <v-list-item>
+                <v-list-item-content class="black--text text-center title">
+                  <v-list-item-title>{{ child.name }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content class="black--text text-center title">
+                  <v-list-item-title>{{ child.qty }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card>
+          </v-row>
+        </v-sheet>
+      </v-carousel-item>
+    </v-carousel>
+  </v-row>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data: () => ({
+    items: [],
+    colors: [
+      'primary',
+      'orange',
+      'yellow darken-2',
+      'red',
+      'cyan',
+    ]
+  }),
+
+  mounted() {
+    this.getData();
+  },
+
+  methods: {
+    async getData() {
+      try {
+        const response  = await axios.get('/api/point/slide');
+        this.items = response.data;
+        console.log(this.items);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+}
+</script>

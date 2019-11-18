@@ -46,6 +46,12 @@ export default [
       { path: 'detail-child/:child_id', name: 'points.detail', component: page('points/detail.vue') }
     ]
   },
+  { path: '/slide-point',
+    component: page('slide_point/index.vue'),
+    children: [
+      { path: '', name: 'slide_point.list', component: page('slide_point/list.vue') }
+    ]
+  },
   { path: '/presence',
     component: page('presence/index.vue'),
     children: [

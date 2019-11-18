@@ -1,9 +1,9 @@
 <template>
   <v-app id="scumbag">
-    <v-content id="mando">
-      <div class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
-        <child></child>
-      </div>
+    <v-content
+      id="mando"
+      class="basic-layout">
+      <child></child>
     </v-content>
   </v-app>
 </template>

@@ -33,7 +33,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::apiResource('configuration', 'ConfigurationController');
     Route::apiResource('grade', 'GradeController');
     Route::apiResource('info-point', 'InfoPointController');
-    Route::apiResource('point', 'PointController');
+    Route::apiResource('point', 'PointController', [
+        'except' => ['show']
+    ]);
     Route::apiResource('presence', 'PresenceController');
     Route::apiResource('user', 'UserController');
 
@@ -52,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::group(['prefix' => 'point'], function() {
         Route::get('show-child/{child_id}', 'PointController@showChild');
+        Route::get('slide', 'PointController@slidePoint');
     });
 
     Route::group(['prefix' => 'presence'], function() {

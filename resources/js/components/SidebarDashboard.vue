@@ -30,6 +30,16 @@
         </v-list-item-content>
       </v-list-item>
     </router-link>
+    <router-link :to="{ name: 'slide_point.list' }" active-class="active" target="_blank">
+      <v-list-item link>
+        <v-list-item-action>
+          <v-icon>mdi-play-box-outline</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ $t('slide_point') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </router-link>
     <v-divider></v-divider>
     <router-link :to="{ name: 'children.list' }" active-class="active">
       <v-list-item link>

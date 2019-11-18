@@ -46,11 +46,6 @@ class PointController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function show($id)
-    {
-        //
-    }
-
     public function showChild(Request $req, $child_id)
     {
         $model = Point::with(['infoPoint'])
@@ -63,6 +58,25 @@ class PointController extends Controller
             'model' => $model,
             'child' => $child
         ];
+
+        return response()->json($result);
+    }
+
+    public function slidePoint(Request $req)
+    {
+        $model = Child::selectRaw('children.id as child_id, name, grade_id, IFNULL(SUM(qty), 0) as qty')
+            ->with(['grade'])
+            ->leftJoin('points', 'children.id', '=', 'points.child_id')
+            ->groupBy([
+                'children.id',
+                'name',
+                'grade_id',
+            ])
+            ->orderBy('qty', 'DESC')
+            ->get()
+            ->toArray();
+
+        $result = array_chunk($model, 4);
 
         return response()->json($result);
     }
