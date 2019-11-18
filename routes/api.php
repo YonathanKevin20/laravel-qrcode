@@ -77,6 +77,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
 
-Route::get('{any}', function() {
+Route::any('{any}', function() {
     return response()->json(['message' => 'Not found'], 404);
 })->where('any', '^(?!api).*$');
