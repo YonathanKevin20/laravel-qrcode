@@ -1,48 +1,61 @@
 <template>
-  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-    <div class="row mt-4">
-      <div class="col-md-3">
-        <card :title="$t('settings')" class="settings-card">
-          <ul class="nav flex-column nav-pills">
-            <li v-for="tab in tabs" :key="tab.route" class="nav-item">
-              <router-link :to="{ name: tab.route }" class="nav-link" active-class="active">
-                <fa :icon="tab.icon" fixed-width />
-                {{ tab.name }}
-              </router-link>
-            </li>
-          </ul>
-        </card>
-      </div>
-
-      <div class="col-md-9">
+  <v-container fluid>
+    <v-row>
+      <v-col cols="3">
+        <v-card
+          class="mx-auto"
+          tile>
+          <v-card-subtitle>{{ $t('settings') }}</v-card-subtitle>
+          <v-list>
+            <v-list-item-group v-model="item" color="primary">
+              <v-list-item
+                v-for="(tab, i) in tabs" :key="i"
+                :to="{ name: tab.route }"
+                link>
+                <v-list-item-icon>
+                  <v-icon>{{ tab.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ tab.name }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+      </v-col>
+      <v-col cols="9">
         <transition name="fade" mode="out-in">
           <router-view />
         </transition>
-      </div>
-    </div>
-  </main>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
-
-<style>
-[role="main"] {
-  padding-top: 58px; /* Space for fixed navbar */
-}
-</style>
 
 <script>
 export default {
   layout: 'dashboard',
+
   middleware: 'auth',
+
+  metaInfo () {
+    return { title: this.$t('settings') }
+  },
+
+  data: () => ({
+    item: 0
+  }),
+
   computed: {
-    tabs () {
+    tabs() {
       return [
         {
-          icon: 'user',
+          icon: 'mdi-account',
           name: this.$t('profile'),
           route: 'settings.profile'
         },
         {
-          icon: 'lock',
+          icon: 'mdi-lock',
           name: this.$t('password'),
           route: 'settings.password'
         }

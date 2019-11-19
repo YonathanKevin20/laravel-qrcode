@@ -1,5 +1,5 @@
 <template>
-  <ValidationProvider :name="$attrs.label" :rules="rules">
+  <ValidationProvider :name="$attrs.label" :rules="rules" :vid="vid">
     <v-text-field
       slot-scope="{ errors, valid }"
       v-model="innerValue"
@@ -29,6 +29,10 @@ export default {
     // must be included in props
     value: {
       type: null
+    },
+    vid: {
+      type: String,
+      default: ''
     }
   },
   data: () => ({

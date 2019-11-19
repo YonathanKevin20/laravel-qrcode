@@ -1,47 +1,58 @@
 <template>
-  <card :title="$t('your_password')">
-    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-      <alert-success :form="form" :message="$t('password_updated')" />
-
-      <!-- Password -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('new_password') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-          <has-error :form="form" field="password" />
-        </div>
-      </div>
-
-      <!-- Password Confirmation -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('confirm_password') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
-          <has-error :form="form" field="password_confirmation" />
-        </div>
-      </div>
-
-      <!-- Submit Button -->
-      <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">
-            {{ $t('update') }}
-          </v-button>
-        </div>
-      </div>
-    </form>
-  </card>
+  <v-card
+    class="mx-auto"
+    tile>
+    <v-card-title>{{ $t('your_password') }}</v-card-title>
+    <v-card-text>
+      <v-container>
+        <ValidationObserver ref="obs">
+          <v-form>
+            <v-alert :value="form.successful" type="success">{{ $t('password_updated') }}</v-alert>
+            <v-row>
+              <v-col offset="1" cols="10">
+                <VPasswordFieldWithValidation
+                  rules="required|min:8"
+                  v-model="form.password"
+                  :vid="'password'"
+                  :label="$t('new_password')" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col offset="1" cols="10">
+                <VPasswordFieldWithValidation
+                  rules="required|confirmed:password"
+                  v-model="form.password_confirmation"
+                  :label="$t('confirm_password')" />
+              </v-col>
+            </v-row>
+          </v-form>
+        </ValidationObserver>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <v-container class="d-flex justify-center">
+        <v-btn
+          color="success"
+          :loading="form.busy"
+          @click="update">{{ $t('update') }}
+        </v-btn>
+      </v-container>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
 import Form from 'vform'
+import { ValidationObserver } from 'vee-validate'
+import VPasswordFieldWithValidation from '~/components/inputs/VPasswordFieldWithValidation'
 
 export default {
-  scrollToTop: false,
-
-  metaInfo () {
-    return { title: this.$t('settings') }
+  components: {
+    ValidationObserver,
+    VPasswordFieldWithValidation
   },
+
+  scrollToTop: false,
 
   data: () => ({
     form: new Form({
@@ -51,10 +62,13 @@ export default {
   }),
 
   methods: {
-    async update () {
-      await this.form.patch('/api/settings/password')
-
-      this.form.reset()
+    async update() {
+      const result = await this.$refs.obs.validate();
+      if(result) {
+        await this.form.patch('/api/settings/password');
+        this.form.reset();
+        this.$refs.obs.reset();
+      }
     }
   }
 }

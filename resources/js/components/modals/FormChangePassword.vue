@@ -10,7 +10,7 @@
             <v-row>
               <v-col cols="12">
                 <VPasswordFieldWithValidation
-                  rules="required"
+                  rules="required|min:8"
                   v-model="form.password"
                   label="Password" />
               </v-col>
@@ -45,7 +45,7 @@ export default {
 
   components: {
     ValidationObserver,
-    VPasswordFieldWithValidation,
+    VPasswordFieldWithValidation
   },
 
   data: () => ({

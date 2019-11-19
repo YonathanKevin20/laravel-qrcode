@@ -17,21 +17,22 @@
           <img :src="user.photo_url" class="rounded-circle profile-photo mr-1"> {{ user.name }}
         </a>
       </template>
-      <v-list flat dense>
-        <v-list-item-group>
-          <router-link :to="{ name: 'settings.profile' }">
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon
-                  :title="$t('settings')"
-                  small>mdi-settings
-                </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{ $t('settings') }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+      <v-list
+        min-width="180px"
+        flat
+        dense>
+        <v-list-item-group color="primary">
+          <v-list-item :to="{ name: 'settings.profile' }">
+            <v-list-item-icon>
+              <v-icon
+                :title="$t('settings')"
+                small>mdi-settings
+              </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{ $t('settings') }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-divider style="margin: 0;"></v-divider>
           <a href="#" @click.prevent="logout">
             <v-list-item>

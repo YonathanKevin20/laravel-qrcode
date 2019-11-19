@@ -28,7 +28,8 @@
           <v-btn
             color="primary"
             :loading="form.busy"
-            @click="login">{{ $t('login') }}</v-btn>
+            @click="login">{{ $t('login') }}
+          </v-btn>
         </v-card-actions>
       </v-card>
     </ValidationObserver>

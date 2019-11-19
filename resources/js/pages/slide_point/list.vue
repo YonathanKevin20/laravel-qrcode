@@ -3,16 +3,16 @@
     <v-carousel
       cycle
       style="height: 100%">
-      <v-carousel-item v-for="(item, i) in items">
+      <v-carousel-item v-for="(item, index) in items" :key="index">
         <v-sheet
-          :color="colors[i]"
+          :color="colors[index]"
           height="100%">
           <v-row
             class="fill-height"
             align="center"
             justify="center">
             <v-card
-              v-for="child in item"
+              v-for="(child, i) in item" :key="i"
               color="white"
               class="pa-md-4 mx-lg-auto"
               width="250px"
@@ -59,7 +59,6 @@ export default {
       try {
         const response  = await axios.get('/api/point/slide');
         this.items = response.data;
-        console.log(this.items);
       } catch (error) {
         console.error(error);
       }

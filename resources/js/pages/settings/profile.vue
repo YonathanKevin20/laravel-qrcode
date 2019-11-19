@@ -1,48 +1,58 @@
 <template>
-  <card :title="$t('your_info')">
-    <form @submit.prevent="update" @keydown="form.onKeydown($event)">
-      <alert-success :form="form" :message="$t('info_updated')" />
-
-      <!-- Name -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
-          <has-error :form="form" field="name" />
-        </div>
-      </div>
-
-      <!-- Email -->
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-        <div class="col-md-7">
-          <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-          <has-error :form="form" field="email" />
-        </div>
-      </div>
-
-      <!-- Submit Button -->
-      <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
-          <v-button :loading="form.busy" type="success">
-            {{ $t('update') }}
-          </v-button>
-        </div>
-      </div>
-    </form>
-  </card>
+  <v-card
+    class="mx-auto"
+    tile>
+    <v-card-title>{{ $t('your_info') }}</v-card-title>
+    <v-card-text>
+      <v-container>
+        <ValidationObserver ref="obs">
+          <v-form>
+            <v-alert :value="form.successful" type="success">{{ $t('info_updated') }}</v-alert>
+            <v-row>
+              <v-col offset="1" cols="10">
+                <VTextFieldWithValidation
+                  rules="required"
+                  v-model="form.name"
+                  :label="$t('name')" />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col offset="1" cols="10">
+                <VTextFieldWithValidation
+                  rules="email"
+                  v-model="form.email"
+                  :label="$t('email')" />
+              </v-col>
+            </v-row>
+          </v-form>
+        </ValidationObserver>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <v-container class="d-flex justify-center">
+        <v-btn
+          color="success"
+          :loading="form.busy"
+          @click="update">{{ $t('update') }}
+        </v-btn>
+      </v-container>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
 import Form from 'vform'
 import { mapGetters } from 'vuex'
+import { ValidationObserver } from 'vee-validate'
+import VTextFieldWithValidation from '~/components/inputs/VTextFieldWithValidation'
 
 export default {
-  scrollToTop: false,
-
-  metaInfo () {
-    return { title: this.$t('settings') }
+  components: {
+    ValidationObserver,
+    VTextFieldWithValidation
   },
+
+  scrollToTop: false,
 
   data: () => ({
     form: new Form({
@@ -55,7 +65,7 @@ export default {
     user: 'auth/user'
   }),
 
-  created () {
+  created() {
     // Fill the form with user data.
     this.form.keys().forEach(key => {
       this.form[key] = this.user[key]
@@ -63,10 +73,12 @@ export default {
   },
 
   methods: {
-    async update () {
-      const { data } = await this.form.patch('/api/settings/profile')
-
-      this.$store.dispatch('auth/updateUser', { user: data })
+    async update() {
+      const result = await this.$refs.obs.validate();
+      if(result) {
+        const { data } = await this.form.patch('/api/settings/profile')
+        this.$store.dispatch('auth/updateUser', { user: data })
+      }
     }
   }
 }
