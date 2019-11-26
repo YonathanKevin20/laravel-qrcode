@@ -1,5 +1,6 @@
 <template>
   <v-carousel
+    cycle
     style="height: 100%">
     <v-carousel-item v-for="(item, index) in items" :key="index">
       <v-sheet
