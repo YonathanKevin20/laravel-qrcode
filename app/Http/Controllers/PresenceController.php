@@ -161,8 +161,6 @@ class PresenceController extends Controller
         $time = $req->time ?? null;
         $epoch = strtotime($date.' '.$time);
         $epoch = $epoch != 0 ? $epoch : strtotime($date.' 00:00:00');
-        $month = date('n', $epoch);
-        $year = date('Y', $epoch);
 
         $model = Presence::where('id', $id)->orWhere(function($q) use($date, $child_id) {
             $q->whereRaw("FROM_UNIXTIME(check_in, '%Y-%m-%d') = '$date'");
@@ -172,16 +170,16 @@ class PresenceController extends Controller
             $model->update([
                 'child_id' => $child_id,
                 'check_in' => $epoch,
-                'month' => $month,
-                'year' => $year
+                'month' => date('n'),
+                'year' => date('Y')
             ]);
         }
         else {
             Presence::create([
                 'child_id' => $child_id,
                 'check_in' => $epoch,
-                'month' => $month,
-                'year' => $year
+                'month' => date('n'),
+                'year' => date('Y')
             ]);
         }
 

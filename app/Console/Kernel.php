@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('generate:absence')->weekly()->sundays()->at('10:00');
+        $schedule->command('generate:absence')->weekly()->sundays()->at('10:10');
     }
 
     /**

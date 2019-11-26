@@ -22,6 +22,12 @@ class DatabaseSeeder extends Seeder
         DB::table('info_points')->insert([
             [
                 'name' => 'import'
+            ],
+            [
+                'name' => 'on time'
+            ],
+            [
+                'name' => 'late'
             ]
         ]);
 
