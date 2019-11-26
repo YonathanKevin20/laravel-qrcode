@@ -55,10 +55,15 @@ class PresenceController extends Controller
         $start_time = Configuration::getValue('start_time');
         $on_time_point = Configuration::getValue('on_time_point');
         $late_point = Configuration::getValue('late_point');
-        $check_in = time();
+        $check_in = $req->check_in ?? time();
         $date = date('Y-m-d', $check_in);
+        $day = date('w', $check_in);
         $late = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%late%"])->first(['id']);
         $on_time = InfoPoint::whereRaw('LOWER(name) LIKE (?)', ["%on time%"])->first(['id']);
+
+        if($day != 0) {
+            return response()->json(['message' => 'Input allowed only Sunday']);
+        }
 
         if(!$child_id) {
             return response()->json(['message' => "Column 'child_id' cannot be NULL"], 203);
