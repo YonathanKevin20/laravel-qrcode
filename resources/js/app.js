@@ -11,7 +11,6 @@ import '~/components'
 
 Vue.prototype.$eventHub = new Vue()
 Vue.config.productionTip = false
-Vue.use(swalPlugin)
 Vue.mixin({
   data: () => ({
     get confirmDelete() {
@@ -56,5 +55,6 @@ new Vue({
   i18n,
   store,
   router,
+  swalPlugin,
   ...App
 })

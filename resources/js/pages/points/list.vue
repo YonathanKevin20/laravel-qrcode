@@ -180,7 +180,7 @@ export default {
     async getData() {
       this.loading = true;
       try {
-        const response  = await this.form.get('/api/point', {
+        const response = await this.form.get('/api/point', {
           params: {
             grade: this.grade
           }
@@ -193,7 +193,7 @@ export default {
     },
     async getDataGrade() {
       try {
-        const response  = await this.form.get('/api/grade');
+        const response = await this.form.get('/api/grade');
         this.grades = response.data;
         this.grades = ['All'].concat(this.grades);
       } catch (error) {
@@ -202,7 +202,7 @@ export default {
     },
     async getDataInfoPoint() {
       try {
-        const response  = await this.form.get('/api/info-point');
+        const response = await this.form.get('/api/info-point');
         this.infoPoints = response.data;
       } catch (error) {
         console.error(error);

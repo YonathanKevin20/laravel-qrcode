@@ -188,7 +188,7 @@ export default {
   methods: {
     async getDataGrade() {
       try {
-        const response  = await axios.get('/api/grade');
+        const response = await axios.get('/api/grade');
         this.grades = response.data;
         this.grades = ['All'].concat(this.grades);
       } catch (error) {
