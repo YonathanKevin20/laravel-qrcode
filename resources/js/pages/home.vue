@@ -53,6 +53,15 @@
                 hide-details>
               </v-select>
             </v-col>
+            <v-col cols="3">
+              <v-select
+                :items="years"
+                v-model="year"
+                label="Year"
+                outlined
+                hide-details>
+              </v-select>
+            </v-col>
           </v-row>
         </div>
         <vue-apex-charts
@@ -85,6 +94,8 @@ export default {
   data: () => ({
     grades: [],
     grade: 'All',
+    years: window.config.listYears,
+    year: new Date().getFullYear(),
     chartGender: {
       series: [],
       options: {
@@ -182,6 +193,9 @@ export default {
   watch: {
     grade(val) {
       this.getChartTotalPresence()
+    },
+    year(val) {
+      this.getChartTotalPresence()
     }
   },
 
@@ -225,7 +239,8 @@ export default {
       try {
         const response = await axios.get('/api/chart/get-total-presence', {
           params: {
-            grade: this.grade
+            grade: this.grade,
+            year: this.year
           }
         });
         this.chartTotalPresence.series = [
